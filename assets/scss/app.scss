@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: $background-body;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+}
+
+.main-content {
+  min-width: $min-width-content;
+}
+
+.card-wrapper {
+  hr {
+    border: 0;
+    border-top: 1px solid #eee;
+  }
+  .background-details {
+    .detail {
+      display: flex;
+      .icon {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+    }
+  }
+}

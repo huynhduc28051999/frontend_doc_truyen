@@ -1,0 +1,128 @@
+{
+  "basics": {
+    "name": "Trinh Hoang Lam",
+    "label": "Programmer",
+    "image": "",
+    "email": "lam.trinhhoang238@gmail.com",
+    "phone": "(+84) 932574790",
+    "summary": "A Software engineer who works with the latest technologies and patterns comfortably both on the back-end and on the front end. Focus on product and company also, whatever is the best for the project. Open-minded, always willing to learn new things and facing challenges. Organizing and implementing workflows that fit best for the project and its goals.",
+    "location": {
+      "address": "Thanh Khe, Da Nang, Vietnam",
+      "postalCode": "550000",
+      "city": "Da Nang",
+      "countryCode": "Vietnam",
+      "region": "50000"
+    },
+    "profiles": [{
+      "network": "Linkedin",
+      "username": "lamtrinh238",
+      "url": "https://www.linkedin.com/in/lamtrinh238"
+    }]
+  },
+  "work": [{
+    "name": "Auvenir/Deloitte",
+    "position": "Full-stack Developer",
+    "startDate": "2021-12",
+    "endDate": "Present",
+    "summary": "Deloitte is one of the Big Four accounting organizations and the largest professional services network in the world by revenue and number of professionals, with headquarters in London, England"
+  }, {
+    "name": "EightCap",
+    "position": "Full-stack Developer",
+    "startDate": "2020-05",
+    "endDate": "2021-12",
+    "url": "https://www.eightcap.com/",
+    "summary": "EightCap a Global company provides the online forex & CFD trading experience possible to Eight Cap’s clients",
+    "highlights": [
+      ".Net core API",
+      "Angular",
+      "MySQL",
+      "Meta trader",
+      "AWS",
+      "Salesforce"
+    ]
+  }, {
+    "name": "Orion Project",
+    "position": "Tech lead/Project Manager",
+    "startDate": "2019-10",
+    "endDate": "2020-04",
+    "summary": "Orion tracking system with full integration of Bluetooth/Wi-Fi hardware and access points. The system will include the following main functions: Security, Personnel Tracking, Efficiency, Productivity",
+    "highlights": [
+      ".Net core API",
+      "Angular",
+      "MS SQL",
+      "Azure"
+    ]
+  }, {
+    "name": "Dell Project",
+    "position": "Tech lead/Project Manager",
+    "startDate": "2018-09",
+    "endDate": "2019-09",
+    "url": "http://vast-pandora.azurewebsites.net/",
+    "summary": "DMS (Driver Management System) is a web application portal that allows internal Dell users as well as ODM to have a centralized tool for everything related to the management of software driver list of a Dell Product with configuration",
+    "highlights": [
+      "ASP MVC",
+      "MS SQL",
+      "Azure",
+      "KendoUI"
+    ]
+  }, {
+    "name": "Integrated Downstream Learning System (iDOLS) Project",
+    "position": "Tech lead/Project Manager",
+    "startDate": "2018-03",
+    "endDate": "2018-08",
+    "url": "http://www.petronas.com.my/community-education/education/pages/industrial-training.aspx",
+    "summary": "The web application will be the medium for analyzing the training records generally for downstream business. This is one of the ways to make sure the business is on track on the training 2 needs of their personnel and compliance to the development and coaching for assessment requirement",
+    "highlights": [
+      "MongoDB",
+      "Express",
+      "ReactJS",
+      "NodeJS"
+    ]
+  }, {
+    "name": "Fis Boarding Project",
+    "position": "Developer",
+    "startDate": "2016-10",
+    "endDate": "2018-02",
+    "url": "https://www.fismerchantpayments.com/",
+    "summary": "Boarding information of merchants",
+    "highlights": [
+      "ASP.NET MVC",
+      "SQL Server",
+      "IIS",
+      "KendoUI"
+    ]
+  }, {
+    "name": "Ignite Project",
+    "position": "Developer",
+    "startDate": "2016-02",
+    "endDate": "2016-10",
+    "url": "http://www.fdcfinancial.com/about-us.html",
+    "summary": "Reporting payment processing of merchants",
+    "highlights": [
+      "ASP.NET MVC",
+      "SQL Server",
+      "IIS",
+      "KendoUI"
+    ]
+  }, {
+    "name": "Car Upgrade Project",
+    "position": "Developer",
+    "startDate": "2014-10",
+    "endDate": "2015-12",
+    "summary": "Estimated Repair of car, invoicing (accounting) management",
+    "highlights": [
+      "ASP.NET MVC",
+      "SQL Server"
+    ]
+  }, {
+    "name": "Management Agent Purchases Beverage Project",
+    "position": "Developer",
+    "startDate": "2014-02",
+    "endDate": "2014-09",
+    "summary": "Order of sale, purchase payments, deliveries management, statistical goods list revenue",
+    "highlights": [
+      "ASP.NET MVC",
+      "SQL Server"
+    ]
+  }]
+}
