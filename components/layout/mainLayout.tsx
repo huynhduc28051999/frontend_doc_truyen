@@ -21,7 +21,6 @@ const MainLayout = (props: Props) => {
           {children}
         </div>
       </main>
-      <Footer />
     </Fragment>
   );
 };
