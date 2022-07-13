@@ -3,7 +3,7 @@ import PageBreadcrumb from '@/components/pageBreadcrumb'
 import TopGroup from '@/components/TopGroup'
 import React from 'react'
 import { Col, Container, Row } from 'reactstrap'
-import Comments from './Comments'
+import Comments from '@/components/Comments'
 
 function DiscussDetail() {
   return (

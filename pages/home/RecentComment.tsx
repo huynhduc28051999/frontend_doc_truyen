@@ -131,7 +131,7 @@ function RecentComment() {
           <div className="comment-info">
             <span className="series-name"><a href="https://docln.net/truyen/7838-hazure-waku-nojoutai-ijou-skillde-saikyou-ni-natta-ore-ga-subete-wo-juurin-suru-made?comment_id=1871477&amp;reply_id=1873385#ln-comment-1873385">Hazure Waku No【Joutai Ijou Skill】De Saikyou Ni Natta Ore Ga Subete Wo Juurin Suru Made</a></span>
             <div className="comment-content">
-              Sau khi tôi hoàn thành chỉnh chương từ Trans gửi thôi &lt;(")
+              Sau khi tôi hoàn thành chỉnh chương từ Trans gửi thôi &lt;
             </div>
             <div className="comment-top">
               <div className="comment-user_ava">
@@ -151,7 +151,7 @@ function RecentComment() {
           <div className="comment-info">
             <span className="series-name"><a href="https://docln.net/truyen/12627-tai-mot-ngoi-truong-danh-gia-gom-toan-nhung-bong-hoa-ngoai-tam-voi-toi-se-phai-am-tham-cham-nom-cho-tieu-thu-so-mot-cua-hoc-vien-nguoi-khong-co-lay-mot-ky-nang-song-nao?comment_id=1873363&amp;reply_id=1873383#ln-comment-1873383">Tại một ngôi trường danh giá gồm toàn những bông hoa ngoài tầm với, tôi sẽ phải âm thầm chăm nom cho tiểu thư số một của học viện (người không có lấy một kỹ năng sống nào)</a></span>
             <div className="comment-content">
-              Cách nhau có 2 đời thì chắc kh đc đâu, nếu mà có quả plot kiểu "mẹ t là con nuôi" thì may ra -_-
+              Cách nhau có 2 đời thì chắc kh đc đâu, nếu mà có quả plot kiểu mẹ t là con nuôi thì may ra -_-
             </div>
             <div className="comment-top">
               <div className="comment-user_ava">
