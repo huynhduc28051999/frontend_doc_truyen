@@ -10,3 +10,8 @@ export const logout = (callback: any) => ({
   type: REQUEST(authConstants.LOGOUT),
   callback,
 });
+
+export const getCurrentUser = (payload: Payload) => ({
+  type: REQUEST(authConstants.GET_ME),
+  payload,
+});

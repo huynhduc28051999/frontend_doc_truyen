@@ -25,4 +25,8 @@ function getUrlRoot(pathname?: string) {
   return pathname ? pathname.split('/')[1] : '';
 }
 
-export { stringifyParams, camelToSnake, getCurrentDomain, getUrlRoot };
+const isBrowser = () => {
+  return typeof window !== 'undefined';
+};
+
+export { stringifyParams, camelToSnake, getCurrentDomain, getUrlRoot, isBrowser };
