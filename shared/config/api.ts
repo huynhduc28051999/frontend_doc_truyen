@@ -4,7 +4,7 @@ import { get, isNil, mergeWith } from 'lodash';
 import Router from 'next/router';
 
 import { stringifyParams } from 'shared/utils';
-import { CookieKey, ROUTER } from 'shared/constant/common';
+import { CookieKey, RouterPath } from 'shared/constant/common';
 import { CookiesStorage } from './cookie';
 import { API_URL } from './setting';
 
@@ -81,13 +81,10 @@ function handleErrorStatus(error: any) {
   switch (status) {
     case 401:
       CookiesStorage.clearAccessToken();
-      if (get(Router, 'router.route') !== ROUTER.Login) {
-        return Router.push(ROUTER.Login);
+      if (get(Router, 'router.route') !== RouterPath.Login) {
+        return Router.push(RouterPath.Login);
       }
       return error.response;
-    case 404:
-      Router.replace(ROUTER.PageNotFound);
-      return error;
     case 200:
     case 201:
     case 204:
@@ -124,9 +121,9 @@ axios.interceptors.response.use(
       },
     };
 
-    if (error?.response?.status === 401 && get(Router, 'router.route') !== ROUTER.Login) {
+    if (error?.response?.status === 401 && get(Router, 'router.route') !== RouterPath.Login) {
       CookiesStorage.clearAccessToken();
-      return Router.push(ROUTER.Login);
+      return Router.push(RouterPath.Login);
     }
 
     return Promise.reject(handleErrorStatus(errorResponse));

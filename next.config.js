@@ -29,6 +29,9 @@ module.exports = () => {
 
     return cfg;
   };
+  const env = {
+    API_URL: (() => process.env.API_URL)(),
+  };
 
   return {
     publicRuntimeConfig,
@@ -37,6 +40,7 @@ module.exports = () => {
     webpack,
     pageExtensions,
     swcMinify: true,
+    env,
     images: {
       disableStaticImages: true,
     },

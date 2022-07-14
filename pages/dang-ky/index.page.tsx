@@ -1,15 +1,17 @@
 import AuthLayout from '@/components/layout/authLayout';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { Dispatch } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import { Container, Row, Col, Card, CardBody, Label, FormGroup, Input, Button, Form } from 'reactstrap';
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import * as yup from 'yup';
 
-import { RootState } from 'redux/rootReducer';
+import { Action } from 'types';
+import { registerAction } from 'redux/actions';
 
-const Register = () => {
+const Register = (props: PropsFromRedux) => {
+  const { register: registerUser, loading } = props;
   const schema = yup.object().shape({
     username: yup.string().required('Tên đăng nhập là bắt buộc').trim(),
     email: yup.string()
@@ -23,7 +25,7 @@ const Register = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'onBlur'
@@ -31,12 +33,8 @@ const Register = () => {
 
   const onSubmit = (data: any) => {
     delete data.passwordConfirmation;
-    console.log(data);
-    
-    // dispatch(loginUser({ params: data, callback: previousUrl => Router.push(previousUrl) }));
+    registerUser({ params: data });
   };
-
-  console.log(errors);
   
   return (
     <AuthLayout>
@@ -78,7 +76,7 @@ const Register = () => {
                           {errors.passwordConfirmation && <p className="text-danger mb-0">{(errors as any)?.passwordConfirmation?.message}</p>}
                         </div>
                         <FormGroup className="form-group mb-0 pt-2 text-center">
-                          <Button className="btn-block btn btn-primary" type="submit">
+                          <Button className="btn-block btn btn-primary" type="submit" disabled={loading || !isValid}>
                             Đăng ký
                           </Button>
                         </FormGroup>
@@ -95,4 +93,17 @@ const Register = () => {
   );
 };
 
-export default Register;
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+  register: (payload: any) => dispatch(registerAction(payload))
+}) 
+
+const mapStateToProps = (state: any) => {
+  const { loading } = state.authReducer;
+  return { loading };
+}
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof withConnect>;
+
+export default withConnect(Register);

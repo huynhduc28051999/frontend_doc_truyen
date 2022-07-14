@@ -1,1 +1,2 @@
-export const URL_LOGIN = '/admin/auth/login';
+export const URL_LOGIN = '/auth/login';
+export const URL_REGISTER = '/auth/register';

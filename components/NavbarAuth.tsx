@@ -22,10 +22,10 @@ const NarbarAuth = () => {
           <div className="me-auto" ></div>
           <Nav navbar>
             <NavItem>
-              <NavLink href="/dang-nhap">Đăng kí</NavLink>
+              <NavLink href="/dang-ky">Đăng kí</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/dang-ky">Đăng nhập</NavLink>
+              <NavLink href="/dang-nhap">Đăng nhập</NavLink>
             </NavItem>
           </Nav>
         </Collapse>

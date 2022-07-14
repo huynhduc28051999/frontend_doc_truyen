@@ -23,7 +23,7 @@ const RouterPath = {
   UserManagement: '/users',
   Home: '/dashboard',
   PageNotFound: '/404',
-  Login: '/login',
+  Login: '/dang-nhap',
   ReissuePassword: '/reissue-password',
   BusinessManagement: '/companies',
   ContractManagement: '/contracts',

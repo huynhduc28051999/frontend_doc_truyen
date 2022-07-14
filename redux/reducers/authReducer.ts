@@ -34,6 +34,24 @@ const reducer = (state = initialState, action: Action) => {
         user: {},
         error,
       };
+    case REQUEST(authConstants.REGISTER):
+      return {
+        ...state,
+        isLoading: true,
+        messageError: '',
+      };
+    case SUCCESS(authConstants.REGISTER):
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case FAILURE(authConstants.REGISTER):
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        error,
+      };
     default:
       return state;
   }

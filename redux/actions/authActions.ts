@@ -15,3 +15,8 @@ export const getCurrentUser = (payload: Payload) => ({
   type: REQUEST(authConstants.GET_ME),
   payload,
 });
+
+export const registerAction = (payload: Payload) => ({
+  type: REQUEST(authConstants.REGISTER),
+  payload,
+});
