@@ -11,8 +11,6 @@ const AuthGuard = (Component: React.FC<any>) => {
   const WrappedComponent = (props: PropsFromRedux) => {
     const { loading, currentUser } = props;
     const router = useRouter();
-    console.log({ loading });
-    
 
     if (loading) {
       return <Loader />;

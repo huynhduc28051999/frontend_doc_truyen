@@ -75,8 +75,6 @@ const reducer = (state = initialState, action: Action | any) => {
         user: payload
       };
     case FAILURE(authConstants.GET_ME):
-      console.log('zoo error');
-      
       return {
         ...state,
         isGettingMe: false,

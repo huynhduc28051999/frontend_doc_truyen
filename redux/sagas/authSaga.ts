@@ -59,8 +59,6 @@ function* register(action: Action) {
 function* getMe(action: Action) {
   const { params } = action.payload || {};
   try {
-    console.log('zoo');
-    
     const getProfileApi = Api.get(URL_GET_ME, {
       headers: {
         Authorization: `Bearer ${params.accessToken}`,
