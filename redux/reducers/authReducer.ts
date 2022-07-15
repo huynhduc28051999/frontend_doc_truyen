@@ -1,18 +1,28 @@
 import { Action } from 'types/action';
 import { authConstants } from '../constants/auth';
 import { FAILURE, REQUEST, SUCCESS } from '../constants';
+import { HYDRATE } from 'next-redux-wrapper';
 
 const initialState = {
   isLoading: false,
+  isGettingMe: false,
   isError: false,
   error: {},
   type: '',
   user: {},
 };
 
-const reducer = (state = initialState, action: Action) => {
+const reducer = (state = initialState, action: Action | any) => {
   const { payload, error } = action;
   switch (action.type) {
+    case HYDRATE: {
+      const { user } = payload.authReducer;
+      const { user: userState } = state;
+      return {
+        ...state,
+        user: user?.id ? user : userState,
+      };
+    }
     case REQUEST(authConstants.LOGIN):
       return {
         ...state,
@@ -50,6 +60,28 @@ const reducer = (state = initialState, action: Action) => {
         ...state,
         isLoading: false,
         isError: true,
+        error,
+      };
+    case REQUEST(authConstants.GET_ME):
+      return {
+        ...state,
+        isGettingMe: true,
+        user: {}
+      };
+    case SUCCESS(authConstants.GET_ME):
+      return {
+        ...state,
+        isGettingMe: false,
+        user: payload
+      };
+    case FAILURE(authConstants.GET_ME):
+      console.log('zoo error');
+      
+      return {
+        ...state,
+        isGettingMe: false,
+        isError: true,
+        user: {},
         error,
       };
     default:

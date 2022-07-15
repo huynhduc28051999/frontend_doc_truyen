@@ -3,7 +3,7 @@ import { camelizeKeys, decamelizeKeys } from 'humps';
 import { get, isNil, mergeWith } from 'lodash';
 import Router from 'next/router';
 
-import { stringifyParams } from 'shared/utils';
+import { isBrowser, stringifyParams } from 'shared/utils';
 import { CookieKey, RouterPath } from 'shared/constant/common';
 import { CookiesStorage } from './cookie';
 import { API_URL } from './setting';
@@ -27,8 +27,8 @@ function getApi(path: string, options: any = {}, apiURL?: string) {
     ...defaultOptions,
     ...options,
     headers: {
-      ...options.headers,
       ...generateToken(),
+      ...options.headers,
     },
   });
 }
@@ -81,7 +81,7 @@ function handleErrorStatus(error: any) {
   switch (status) {
     case 401:
       CookiesStorage.clearAccessToken();
-      if (get(Router, 'router.route') !== RouterPath.Login) {
+      if (isBrowser() && get(Router, 'router.route') !== RouterPath.Login) {
         return Router.push(RouterPath.Login);
       }
       return error.response;
@@ -110,18 +110,16 @@ axios.interceptors.response.use(
     const errorData = errorResponse?.response?.data || {};
     // const errorCode = errorData?.error?.error_id;
     const errorMessageCode = errorData?.error?.message;
-    // const errorMessage = errorMessageCode ? i18next.t(`error_message:${errorMessageCode}`) : errorData.message;
 
     errorResponse.response = {
       ...errorResponse.response,
       data: {
         ...errorData.error,
-        // message: errorMessage,
         errors: errorData?.error?.errors || [],
       },
     };
 
-    if (error?.response?.status === 401 && get(Router, 'router.route') !== RouterPath.Login) {
+    if (error?.response?.status === 401 && isBrowser() && get(Router, 'router.route') !== RouterPath.Login) {
       CookiesStorage.clearAccessToken();
       return Router.push(RouterPath.Login);
     }
@@ -132,7 +130,7 @@ axios.interceptors.response.use(
 
 axios.interceptors.request.use(config => {
   const newConfig = { ...config };
-  
+
   if (newConfig?.headers?.['Content-Type'] === 'multipart/form-data') return newConfig;
   if (config.params) {
     newConfig.params = decamelizeKeys(config.params);

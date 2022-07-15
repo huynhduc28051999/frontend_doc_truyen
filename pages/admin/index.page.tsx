@@ -1,3 +1,4 @@
+import AuthGuard from '@/components/HOC/authGuard'
 import React from 'react'
 
 function Admin() {
@@ -6,4 +7,4 @@ function Admin() {
   )
 }
 
-export default Admin
+export default AuthGuard(Admin)

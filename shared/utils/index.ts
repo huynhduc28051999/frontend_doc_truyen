@@ -15,8 +15,12 @@ const stringifyParams = (data: any) => {
   });
 };
 
+const isBrowser = () => {
+  return typeof window !== 'undefined';
+};
+
 function getCurrentDomain() {
-  const parts = window.location.hostname.split('.');
+  const parts = isBrowser() ? window.location.hostname.split('.') : [];
   parts.shift();
   return parts.join('.');
 }
@@ -25,8 +29,5 @@ function getUrlRoot(pathname?: string) {
   return pathname ? pathname.split('/')[1] : '';
 }
 
-const isBrowser = () => {
-  return typeof window !== 'undefined';
-};
 
 export { stringifyParams, camelToSnake, getCurrentDomain, getUrlRoot, isBrowser };

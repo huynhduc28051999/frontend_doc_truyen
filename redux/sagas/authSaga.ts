@@ -1,6 +1,6 @@
 import { put, call, all, takeEvery } from 'redux-saga/effects';
 import Api from 'shared/config/api';
-import { URL_LOGIN, URL_REGISTER } from 'shared/constant/endpoints';
+import { URL_GET_ME, URL_LOGIN, URL_REGISTER } from 'shared/constant/endpoints';
 import { CookiesStorage } from 'shared/config/cookie';
 import { Action, ResponseGenerator } from 'types/action';
 import { authConstants, REQUEST, SUCCESS, FAILURE } from '../constants';
@@ -56,9 +56,36 @@ function* register(action: Action) {
   }
 }
 
+function* getMe(action: Action) {
+  const { params } = action.payload || {};
+  try {
+    console.log('zoo');
+    
+    const getProfileApi = Api.get(URL_GET_ME, {
+      headers: {
+        Authorization: `Bearer ${params.accessToken}`,
+      }
+    });
+    const response: ResponseGenerator = yield call(() => getProfileApi);
+    if (response?.data?.data) {
+      yield put({
+        type: SUCCESS(authConstants.GET_ME),
+        payload: response?.data?.data,
+      });
+    }
+
+  } catch (error) {
+    yield put({
+      type: FAILURE(authConstants.GET_ME),
+      error,
+    });
+  }
+}
+
 function* authSaga() {
   yield takeEvery(REQUEST(authConstants.LOGIN), login);
   yield takeEvery(REQUEST(authConstants.REGISTER), register);
+  yield takeEvery(REQUEST(authConstants.GET_ME), getMe);
 }
 
 export default authSaga;
