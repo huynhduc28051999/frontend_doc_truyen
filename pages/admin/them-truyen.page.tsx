@@ -10,30 +10,31 @@ import AuthLayout from '@/components/layout/authLayout';
 import { Action } from 'types';
 import { TAG } from './constants';
 import Checkbox from '@/components/form/Checkbox';
+import { Payload } from 'types/action';
+import { createStory } from 'redux/actions/storyAction';
 
 const SunEditor = dynamic(() => import("suneditor-react"), {
   ssr: false,
 });
 
-interface ICreateStoryProps extends PropsFromRedux {
-  toggle: () => void;
-  modal: boolean;
-}
+interface ICreateStoryProps extends PropsFromRedux {}
 
 const defaultValues = {
-  companyId: '',
-  content: '<p></p>',
-  name: '',
-  type: 0,
-  validFlg: true,
-  genres: []
+  summary: '<p></p>',
+  type: '1',
+  genres: [],
+  title: '',
+  altname: '',
+  author: '',
+  illustrator: '',
+  extra: '<p></p>',
+  status: '1'
 }
 
 const CreateStory: React.FC<ICreateStoryProps> = (props) => {
   const {
-    modal,
     isLoading,
-    currentUser,
+    createStoryAction,
   } = props;
   const schema = yup.object().shape({
     title: yup.string().required('Tên truyện là bắt buộc'),
@@ -52,9 +53,16 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
   const resetFormValue = () => {
     reset(defaultValues);
   };
-
+  
   const onSubmit = (data: any) => {
-    console.log(data)
+    const params = {
+      ...data,
+      status: Number(data.status),
+      type: Number(data.type),
+      genders: data.genders.filter((item: number | undefined) => !!item),
+      altname: (data.altname ?? '').split(';').filter((item: string | undefined) => item)
+    }
+    createStoryAction({ params })
   }
 
   return (
@@ -177,6 +185,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                       />
                     )}
                   />
+                  <FormFeedback>{errors?.summary?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup>
@@ -218,7 +227,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                       </Input>
                     )}
                   />
-                  <FormFeedback>{errors?.type?.message}</FormFeedback>
+                  <FormFeedback>{errors?.status?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup className="form-group mb-0 pt-2 text-center">
@@ -234,7 +243,9 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
   )
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({});
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+  createStoryAction: (payload: Payload) => dispatch(createStory(payload)),
+});
 
 const mapStateToProps = (state: any) => {
   const { user } = state.authReducer;

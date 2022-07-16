@@ -59,4 +59,16 @@ const TAG = [
   { value: 48, name: 'Yuri'},
 ];
 
-export { TAG }
+const STORY_STATUS = {
+  1: 'Đang tiến hành',
+  2: 'Tạm ngưng',
+  3: 'Đã hoàn thành'
+}
+
+const STORY_TYPE = {
+  1: 'Truyện dịch',
+  2: 'Truyện convert',
+  3: 'Truyện sáng tác',
+}
+
+export { TAG, STORY_STATUS, STORY_TYPE }

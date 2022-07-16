@@ -9,10 +9,10 @@ import { CookiesStorage } from 'shared/config/cookie';
 
 const AuthGuard = (Component: any) => {
   const WrappedComponent = (props: any) => {
-    const { loading, currentUser } = props;
+    const { isGettingMe, currentUser } = props;
     const router = useRouter();
 
-    if (loading) {
+    if (isGettingMe) {
       return <Loader />;
     }
 
@@ -31,7 +31,7 @@ const AuthGuard = (Component: any) => {
     return {
       ...ownProps,
       currentUser: state.authReducer.user,
-      loading: state.authReducer.isGettingMe,
+      isGettingMe: state.authReducer.isGettingMe,
     }
   };
 

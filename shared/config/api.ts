@@ -34,7 +34,7 @@ function getApi(path: string, options: any = {}, apiURL?: string) {
 }
 
 function postApi(path: string, data: any, options: any = {}) {
-  const headerParams = mergeWith(options.headers, generateToken(), customizer);
+  const headerParams = mergeWith(generateToken(), options.headers, customizer);
 
   return axios.post(`${API_URL}/${path.replace(/^\//, '')}`, data, {
     ...defaultOptions,
