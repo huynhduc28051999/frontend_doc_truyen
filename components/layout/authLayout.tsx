@@ -15,6 +15,7 @@ const AuthLayout = (props: Props) => {
     <Fragment>
       <Head>{headData}</Head>
       <NarbarAuth />
+      <hr style={{ margin: 0 }}/>
       <main id="mainLayout" className={`main-container ${customClass}`}>
         <div id="wrapper">
           {children}

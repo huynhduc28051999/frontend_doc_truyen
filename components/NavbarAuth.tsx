@@ -8,7 +8,6 @@ import {
   NavbarToggler,
   NavItem,
   NavLink,
-  Container,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
@@ -21,15 +20,15 @@ const NarbarAuth = ({ currentUser }: PropsFromRedux) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
   return (
-    <Container className='position-sticky' fluid="md">
+    <div className='position-sticky'>
       <Navbar color="light" expand="md" light>
-        <NavbarBrand>Bảng điều khiển</NavbarBrand>
+        <NavbarBrand href={currentUser?.id ? '/admin' : '/'}>Bảng điều khiển</NavbarBrand>
         <NavbarBrand href="/">
             <Home />
         </NavbarBrand>
         <NavbarToggler onClick={toggleMenu} />
         <Collapse navbar isOpen={isOpen}>
-          {currentUser ? (
+          {currentUser?.id ? (
             <>
               <Nav className="me-auto" navbar>
                 <NavItem>
@@ -79,7 +78,7 @@ const NarbarAuth = ({ currentUser }: PropsFromRedux) => {
           )}
         </Collapse>
       </Navbar>
-    </Container>
+    </div>
   );
 };
 
