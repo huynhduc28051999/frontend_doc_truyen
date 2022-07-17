@@ -1,6 +1,6 @@
 import AuthGuard from '@/components/HOC/authGuard'
 import React from 'react'
-import Series from './sang-tac.page'
+import Series from './sang-tac/index.page'
 
 function Admin() {
   return (

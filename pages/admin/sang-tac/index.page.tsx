@@ -8,7 +8,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Button, CardBody, Container } from 'reactstrap';
 import { getOwnStories } from 'redux/actions/storyAction';
 import { Action } from 'types';
-import { STORY_STATUS, STORY_TYPE } from './constants';
+import { STORY_STATUS, STORY_TYPE } from '../constants';
 
 const columns = [
   {

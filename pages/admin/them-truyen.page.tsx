@@ -172,13 +172,13 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                       <SunEditor
                         {...field}
                         lang={'en'}
-                        height='250px'
+                        height='300px'
                         setOptions={{
                           buttonList: [
                             ['undo', 'redo'],
                             ['formatBlock', 'align', 'fontSize'],
                             ['bold', 'italic', 'blockquote', 'link', 'list'],
-                            ['fullScreen', 'codeView', 'preview'],
+                            ['fullScreen', 'codeView', 'preview', 'image'],
                           ]
                         }}
                         setContents={field.value}
@@ -198,7 +198,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                       <SunEditor
                         {...field}
                         lang={'en'}
-                        height='250px'
+                        height='300px'
                         setOptions={{
                           buttonList: [
                             ['undo', 'redo'],
