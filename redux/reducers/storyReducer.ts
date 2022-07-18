@@ -30,6 +30,7 @@ const reducer = (state = initialState, action: Action) => {
         isError: true,
       };
     case REQUEST(StoryConstant.GET_OWN_STORIES):
+    case REQUEST(StoryConstant.GET_ALL_STORIES):
       return {
         ...state,
         isLoading: true,
@@ -37,6 +38,7 @@ const reducer = (state = initialState, action: Action) => {
         stories: []
       };
     case SUCCESS(StoryConstant.GET_OWN_STORIES):
+    case SUCCESS(StoryConstant.GET_ALL_STORIES):
       return {
         ...state,
         isLoading: false,
@@ -44,6 +46,25 @@ const reducer = (state = initialState, action: Action) => {
         stories: payload?.response
       };
     case FAILURE(StoryConstant.GET_OWN_STORIES):
+    case FAILURE(StoryConstant.GET_ALL_STORIES):
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
+    case REQUEST(StoryConstant.CREATE_CHAPPER):
+      return {
+        ...state,
+        isLoading: true,
+        isError: false
+      };
+    case SUCCESS(StoryConstant.CREATE_CHAPPER):
+      return {
+        ...state,
+        isLoading: false,
+        isError: false
+      };
+    case FAILURE(StoryConstant.CREATE_CHAPPER):
       return {
         ...state,
         isLoading: false,

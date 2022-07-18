@@ -1,6 +1,6 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
 import Api from 'shared/config/api';
-import { URL_OWN_STORIES, URL_STORY } from 'shared/constant/endpoints';
+import { URL_ALL_STORIES, URL_CHAPPER, URL_OWN_STORIES, URL_STORY } from 'shared/constant/endpoints';
 import { Action, ResponseGenerator } from 'types/action';
 import { StoryConstant, REQUEST, SUCCESS, FAILURE } from '../constants';
 import { toast } from 'react-toastify';
@@ -49,10 +49,73 @@ function* getOwnStories(action: Action) {
   }
 }
 
+function* getStoryId(action: Action) {
+  const { params, callback } = action.payload || {};
+  try {
+    const getStoryApi = Api.get(URL_STORY, { params });
+    const response: ResponseGenerator = yield call(() => getStoryApi);
+    if (response?.data?.data) {
+      callback?.(response?.data?.data)
+    }
+  } catch (error) {
+  toast.error('Lỗi lấy thông tin truyện');
+  Router.push('/admin/sang-tac')
+  }
+}
+
+function* createChapper(action: Action) {
+  const { params } = action.payload || {};
+  try {
+    const createChapperApi = Api.post(URL_CHAPPER, params);
+    const response: ResponseGenerator = yield call(() => createChapperApi);
+    if (response?.data?.data) {
+      yield put({
+        type: SUCCESS(StoryConstant.CREATE_CHAPPER),
+        payload: {
+          response: response?.data?.data
+        },
+      });
+      toast.success('Thêm chương thành công')
+      Router.push('/admin/sang-tac')
+    }
+  } catch (error) {
+  toast.error('Thêm chương thất bại')
+    yield put({
+      type: FAILURE(StoryConstant.CREATE_CHAPPER),
+      error,
+    });
+  }
+}
+
+function* getAllStories(action: Action) {
+  const { callback } = action.payload || {};
+  try {
+    const getAllStoriesApi = Api.get(URL_ALL_STORIES);
+    const response: ResponseGenerator = yield call(() => getAllStoriesApi);
+    if (response?.data?.data) {
+      yield put({
+        type: SUCCESS(StoryConstant.GET_ALL_STORIES),
+        payload: {
+          response: response?.data?.data
+        },
+      });
+      callback?.(response?.data?.data?.[0])
+    }
+  } catch (error) {
+  toast.error('Lấy danh sách cuộc thảo luận thất bại')
+    yield put({
+      type: FAILURE(StoryConstant.GET_ALL_STORIES),
+      error,
+    });
+  }
+}
 
 function* storySaga() {
   yield takeEvery(REQUEST(StoryConstant.CREATE_STORY), createStory);
   yield takeEvery(REQUEST(StoryConstant.GET_OWN_STORIES), getOwnStories);
+  yield takeEvery(REQUEST(StoryConstant.GET_SOTRY_ID), getStoryId);
+  yield takeEvery(REQUEST(StoryConstant.CREATE_CHAPPER), createChapper);
+  yield takeEvery(REQUEST(StoryConstant.GET_ALL_STORIES), getAllStories);
 }
 
 export default storySaga;

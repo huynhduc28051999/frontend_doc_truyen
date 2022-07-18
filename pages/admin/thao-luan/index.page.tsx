@@ -1,27 +1,27 @@
 import AuthGuard from '@/components/HOC/authGuard'
 import AuthLayout from '@/components/layout/authLayout';
 import Loader from '@/components/loader';
+import { useRouter } from 'next/router';
 import React, { Dispatch, useEffect } from 'react'
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationListStandalone, PaginationProvider } from 'react-bootstrap-table2-paginator';
+import { Eye, Trash2 } from 'react-feather';
 import { connect, ConnectedProps } from 'react-redux';
 import { CardBody, Container } from 'reactstrap';
-import { getOwnStories } from 'redux/actions/storyAction';
+import { getOwnDiscuss } from 'redux/actions/discussAction';
+import { formatDate } from 'shared/utils';
 import { Action } from 'types';
-import { STORY_STATUS, STORY_TYPE } from '../constants';
-import { Eye, Trash2, PlusCircle } from 'react-feather';
-import { useRouter } from 'next/router';
 
 type Props = PropsFromRedux & {
   currentUser: any
 }
 
-function Series(props: Props) {
-  const { currentUser, getOwnStoriesAction, loading, stories } = props;
+function Discuss(props: Props) {
+  const { currentUser, getOwnDiscuss, loading, discuss } = props;
   const router = useRouter();
 
   useEffect(() => {
-    getOwnStoriesAction();
+    getOwnDiscuss();
   }, [])
 
   const columns = [
@@ -31,17 +31,14 @@ function Series(props: Props) {
     },
     {
       dataField: "author",
-      text: "Tác giả",
+      isDummyField: true,
+      text: "Người đăng",
+      formatter: () => currentUser.username,
     },
     {
-      dataField: "type",
-      text: "Loại truyện",
-      formatter: (status: keyof typeof STORY_TYPE) => STORY_TYPE[status],
-    },
-    {
-      dataField: "status",
-      text: "Tình trạng dịch",
-      formatter: (status: keyof typeof STORY_STATUS) => STORY_STATUS[status],
+      dataField: "createdAt",
+      text: "ngày đăng",
+      formatter: (data: number) => formatDate(data),
     },
     {
       dataField: 'action',
@@ -50,10 +47,6 @@ function Series(props: Props) {
       formatter: (_: undefined, row: any) => {
         const FormatterComponent = (
           <div className='d-flex jutify-center'>
-            <PlusCircle
-              style={{ marginRight: 10 }}
-              role="button"
-              onClick={() => router.push({ pathname: '/admin/sang-tac/[id]/them-chap', query: { id: row.id } })} />
             <Eye
               style={{ marginRight: 10 }}
               role="button"
@@ -66,12 +59,12 @@ function Series(props: Props) {
       headerStyle: { width: 200 },
     },
   ];
-
+  
   const pagination = paginationFactory({
     custom: true,
     hideSizePerPage: true,
     sizePerPage: 20,
-    totalSize: stories.length,
+    totalSize: discuss.length,
     withFirstAndLast: true,
     lastPageText: 'Cuối',
     firstPageText: 'Đầu',
@@ -81,9 +74,9 @@ function Series(props: Props) {
   
   return (
     <AuthLayout>
-      <Container fluid='lg' className='mt-5'>
+      <Container fluid='md' className='mt-5'>
         <div className="basic-section">
-          <header className="sect-header"><span className="sect-title">Sáng tác của {currentUser.username}</span></header>
+          <header className="sect-header"><span className="sect-title">Thảo luận của {currentUser.username}</span></header>
           <section
             className="board-list has-pagination"
             style={{ marginTop: 20 }}
@@ -100,7 +93,7 @@ function Series(props: Props) {
                       bordered
                       hover
                       keyField='id'
-                      data={stories}
+                      data={discuss}
                       columns={columns}
                       onTableChange={() => {}}
                     />
@@ -119,16 +112,15 @@ function Series(props: Props) {
 }
 
 const mapStateToProps = (state: any) => ({
-  stories: state.storyReducer.stories,
-  loading: state.storyReducer.loading
+  discuss: state.discussReducer.discuss,
+  loading: state.discussReducer.isLoading,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  getOwnStoriesAction: () => dispatch(getOwnStories()),
+  getOwnDiscuss: () => dispatch(getOwnDiscuss())
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-
-export default AuthGuard(connector(Series))
+export default AuthGuard(connector(Discuss))

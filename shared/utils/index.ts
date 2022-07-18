@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import queryString from 'query-string';
 
 function camelToSnake(value: string) {
@@ -29,5 +30,8 @@ function getUrlRoot(pathname?: string) {
   return pathname ? pathname.split('/')[1] : '';
 }
 
+function formatDate(date: string | number) {
+  return format(new Date(date), 'dd/MM/yyyy')
+}
 
-export { stringifyParams, camelToSnake, getCurrentDomain, getUrlRoot, isBrowser };
+export { stringifyParams, camelToSnake, getCurrentDomain, getUrlRoot, isBrowser, formatDate };

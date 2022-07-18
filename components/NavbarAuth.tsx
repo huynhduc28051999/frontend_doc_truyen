@@ -47,7 +47,7 @@ const NarbarAuth = ({ currentUser }: PropsFromRedux) => {
                   </DropdownToggle>
                   <DropdownMenu end>
                     <DropdownItem>
-                      <NavLink href="/admin/them-thao-luan">
+                      <NavLink href="/admin/thao-luan/them-thao-luan">
                         Thêm thảo luận
                       </NavLink>
                     </DropdownItem>

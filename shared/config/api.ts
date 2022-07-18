@@ -132,12 +132,7 @@ axios.interceptors.request.use(config => {
   const newConfig = { ...config };
 
   if (newConfig?.headers?.['Content-Type'] === 'multipart/form-data') return newConfig;
-  if (config.params) {
-    newConfig.params = decamelizeKeys(config.params);
-  }
-  if (config.data) {
-    newConfig.data = decamelizeKeys(config.data);
-  }
+
   return newConfig;
 });
 

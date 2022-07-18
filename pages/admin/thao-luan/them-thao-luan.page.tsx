@@ -9,8 +9,8 @@ import AuthGuard from '@/components/HOC/authGuard'
 import AuthLayout from '@/components/layout/authLayout';
 import { Action } from 'types';
 import { Payload } from 'types/action';
-import { createChapper, getStoryId } from 'redux/actions/storyAction';
-import { useRouter } from 'next/router';
+import { getAllStories } from 'redux/actions/storyAction';
+import { createDiscuss } from 'redux/actions/discussAction';
 
 const SunEditor = dynamic(() => import("suneditor-react"), {
   ssr: false,
@@ -21,21 +21,23 @@ interface ICreateStoryProps extends PropsFromRedux {}
 const defaultValues = {
   title: '',
   content: '<p></p>',
+  category: '1',
 }
 
 const CreateStory: React.FC<ICreateStoryProps> = (props) => {
   const {
-    getStoryIdAction,
-    createChapperAction
+    createDiscussAction,
+    getAllStories,
+    stories
   } = props;
-  const router = useRouter();
-  const { id } = router.query;
   const schema = yup.object().shape({
     title: yup.string().required('Tiêu đề chương là bắt buộc'),
     content: yup.string().required('Tóm tắt là bắt buộc'),
+    category: yup.string().required('Chuyên mục là bắt buộc'),
+    seriesId: yup.string().required('Truyện là bắt buộc'),
   });
 
-  const { formState: { errors, isValid }, handleSubmit, control } = useForm<any>({
+  const { formState: { errors, isValid }, handleSubmit, control, setValue } = useForm<any>({
     resolver: yupResolver(schema),
     mode: 'onBlur',
     defaultValues,
@@ -44,22 +46,22 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
   const onSubmit = (data: any) => {
     const params = {
       ...data,
-      storyId: id,
+      category: Number(data.category)
     }
-    createChapperAction({ params })
+    createDiscussAction({ params })
   }
-
+  
   useEffect(() => {
-    if (id) {
-      getStoryIdAction({ params: { id }})
-    }
+    getAllStories({
+      callback: (data) => setValue('seriesId', data?.id)
+    });
   }, [])
 
   return (
     <AuthLayout>
       <Container fluid='lg' className='mt-5'>
         <div className="basic-section">
-          <header className="sect-header"><span className="sect-title">Thêm Chương</span></header>
+          <header className="sect-header"><span className="sect-title">Thêm Thảo luận</span></header>
           <CardBody>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <FormGroup row className='required'>
@@ -74,7 +76,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                 </Col>
               </FormGroup>
               <FormGroup className='required'>
-                <Label className='col-form-label'>Nội dung chương</Label>
+                <Label className='col-form-label'>Nội dung</Label>
                 <Col >
                   <Controller
                     name="content"
@@ -83,7 +85,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                       <SunEditor
                         {...field}
                         lang={'en'}
-                        height='500px'
+                        height='300px'
                         setOptions={{
                           buttonList: [
                             ['undo', 'redo'],
@@ -99,9 +101,45 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                   <FormFeedback>{errors?.content?.message}</FormFeedback>
                 </Col>
               </FormGroup>
+              <FormGroup row className='required'>
+                <Label sm={2}>Chọn chuyên mục</Label>
+                <Col sm={10} className='pr-4'>
+                  <Controller
+                    name="category"
+                    control={control}
+                    render={({ field }) => (
+                      <Input invalid={!!errors.category} type="select" {...field} style={{ width: 200 }} >
+                        <option value="1">Thông báo</option>
+                        <option value="2">Tin tức</option>
+                        <option value="3">Hỏi đáp</option>
+                        <option value="4">Đánh giá</option>
+                        <option value="5">Thảo luận</option>
+                      </Input>
+                    )}
+                  />
+                  <FormFeedback>{errors?.category?.message}</FormFeedback>
+                </Col>
+              </FormGroup>
+              <FormGroup row className='required'>
+                <Label sm={2}>Chọn truyện</Label>
+                <Col sm={10} className='pr-4'>
+                  <Controller
+                    name="seriesId"
+                    control={control}
+                    render={({ field }) => (
+                      <Input invalid={!!errors.seriesId} type="select" {...field} >
+                        {stories.map((item: any) => (
+                          <option key={item.id} value={item.id}>{item.title}</option>
+                        ))}
+                      </Input>
+                    )}
+                  />
+                  <FormFeedback>{errors?.seriesId?.message}</FormFeedback>
+                </Col>
+              </FormGroup>
               <FormGroup className="form-group mb-0 pt-2 text-center">
                 <Button className="btn-block btn btn-primary" type="submit" disabled={!isValid}>
-                  Thêm chương
+                  Thêm thảo luận
                 </Button>
               </FormGroup>
             </Form>
@@ -112,12 +150,16 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
   )
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  getStoryIdAction: (payload: Payload) => dispatch(getStoryId(payload)),
-  createChapperAction: (payload: Payload) => dispatch(createChapper(payload)),
+const mapStateToProps = (state: any) => ({
+  stories: state.storyReducer.stories,
 });
 
-const connector = connect(null, mapDispatchToProps);
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+  createDiscussAction: (payload: Payload) => dispatch(createDiscuss(payload)),
+  getAllStories: (payload: Payload) => dispatch(getAllStories(payload)),
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 export default AuthGuard(connector(CreateStory));

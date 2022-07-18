@@ -9,3 +9,18 @@ export const createStory = (payload: Payload) => ({
 export const getOwnStories = () => ({
   type: REQUEST(StoryConstant.GET_OWN_STORIES)
 });
+
+export const getStoryId = (payload: Payload) => ({
+  type: REQUEST(StoryConstant.GET_SOTRY_ID),
+  payload,
+});
+
+export const createChapper = (payload: Payload) => ({
+  type: REQUEST(StoryConstant.CREATE_CHAPPER),
+  payload,
+});
+
+export const getAllStories = (payload: Payload) => ({
+  type: REQUEST(StoryConstant.GET_ALL_STORIES),
+  payload,
+});
