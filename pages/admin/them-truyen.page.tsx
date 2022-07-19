@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react';
+import React, { Dispatch, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Label, FormGroup, Col, Input, FormFeedback, Form, Container, CardBody, Button } from 'reactstrap';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
@@ -36,6 +36,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
     isLoading,
     createStoryAction,
   } = props;
+  const [file, setFile] = useState<any>();
   const schema = yup.object().shape({
     title: yup.string().required('Tên truyện là bắt buộc'),
     author: yup.string().required('Tác giả là bắt buộc'),
@@ -44,14 +45,27 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
     status: yup.string().required('Tình trạng dịch là bắt buộc'),
   });
 
-  const { formState: { errors, isValid }, handleSubmit, control, reset } = useForm<any>({
+  const { formState: { errors, isValid }, handleSubmit, control } = useForm<any>({
     resolver: yupResolver(schema),
     mode: 'onBlur',
     defaultValues,
   });
 
-  const resetFormValue = () => {
-    reset(defaultValues);
+  const getBase64 = (file: any) => {
+    return new Promise(resolve => {
+      let baseURL: any = "";
+      // Make new FileReader
+      let reader = new FileReader();
+
+      // Convert the file to base64 text
+      reader.readAsDataURL(file);
+
+      // on reader load somthing...
+      reader.onload = () => {
+        baseURL = reader.result;
+        resolve(baseURL);
+      };
+    });
   };
   
   const onSubmit = (data: any) => {
@@ -60,9 +74,19 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
       status: Number(data.status),
       type: Number(data.type),
       genders: data.genders.filter((item: number | undefined) => !!item),
-      altname: (data.altname ?? '').split(';').filter((item: string | undefined) => item)
+      altname: (data.altname ?? '').split(';').filter((item: string | undefined) => item),
+      avatar: file
     }
     createStoryAction({ params })
+  }
+  const onSelectFile = (event: any) => {
+    getBase64(event?.target?.files?.[0])
+      .then(result => {
+        setFile(result);
+      })
+      .catch(err => {
+        setFile('');
+      });
   }
 
   return (
@@ -93,6 +117,12 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                     render={({ field }) => <Input invalid={!!errors.altname} type="text" {...field} placeholder='Ngăn cách nhiều tên bằng dấu chấm phẩy ;' />}
                   />
                   <FormFeedback>{errors?.altname?.message}</FormFeedback>
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label sm={2}>Tên khác</Label>
+                <Col sm={10} className='pr-4'>
+                  <Input invalid={!!errors.altname} type='file' onChange={onSelectFile} accept="image/*"/>
                 </Col>
               </FormGroup>
               <FormGroup row className='required'>
