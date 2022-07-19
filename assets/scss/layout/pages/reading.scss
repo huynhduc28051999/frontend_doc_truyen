@@ -59,3 +59,48 @@ h5, h6 {
 .reading-content p {
   text-align: justify;
 }
+.sub-index-style {
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 10px;
+  .title-wrapper {
+    margin-bottom: 10px;
+  }
+  .section-title {
+    background-color: #f5f5f5;
+    border: 1px solid #d4dae2;
+    border-radius: 4px;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22px;
+    padding: 4px 10px;
+    position: relative;
+  }
+  .filter-type {
+    margin: 0;
+    padding: 0 10px;
+    .filter-type_item {
+      padding: 4px 0;
+      &.active {
+        background-color: #36a189;
+        color: #fff;
+      }
+    }
+  }
+}
+.filter-section {
+  .submit-wrapper {
+    margin-top: 10px;
+    text-align: right;
+  }
+}
+.statistic-top, .unstyled, .user-private-tabs, ul.list-chapters, ul.mail-participants, ul.others-list li {
+  list-style: none;
+  text-decoration: none;
+}
+.button-primary-green {
+  background-color: #36a189;
+  border-color: #0f9779;
+  color: #fff;
+}

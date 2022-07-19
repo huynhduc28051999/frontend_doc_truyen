@@ -4,6 +4,7 @@ export const URL_GET_ME = '/auth/profile';
 export const URL_STORY = '/story';
 export const URL_OWN_STORIES = '/story/byMe';
 export const URL_ALL_STORIES = '/story/all';
+export const URL_SEARCH_STORIES = '/story/search';
 export const URL_CHAPPER = '/chapper';
 export const URL_DISCUSS = '/discuss';
 export const URL_OWN_DISCUSS = '/discuss/byMe';

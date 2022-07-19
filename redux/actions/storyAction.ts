@@ -24,3 +24,8 @@ export const getAllStories = (payload: Payload) => ({
   type: REQUEST(StoryConstant.GET_ALL_STORIES),
   payload,
 });
+
+export const searchStories = (payload: Payload) => ({
+  type: REQUEST(StoryConstant.SEARCH_STORIES),
+  payload,
+});

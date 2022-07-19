@@ -5,7 +5,8 @@ import { FAILURE, REQUEST, SUCCESS } from '../constants';
 const initialState = {
   isLoading: false,
   isError: false,
-  stories: []
+  stories: [],
+  pagination: {}
 };
 
 const reducer = (state = initialState, action: Action) => {
@@ -31,22 +32,27 @@ const reducer = (state = initialState, action: Action) => {
       };
     case REQUEST(StoryConstant.GET_OWN_STORIES):
     case REQUEST(StoryConstant.GET_ALL_STORIES):
+    case REQUEST(StoryConstant.SEARCH_STORIES):
       return {
         ...state,
         isLoading: true,
         isError: false,
-        stories: []
+        stories: [],
+        pagination: {}
       };
     case SUCCESS(StoryConstant.GET_OWN_STORIES):
     case SUCCESS(StoryConstant.GET_ALL_STORIES):
+    case SUCCESS(StoryConstant.SEARCH_STORIES):
       return {
         ...state,
         isLoading: false,
         isError: false,
-        stories: payload?.response
+        stories: payload?.response?.stories,
+        pagination: payload?.response?.pagination
       };
     case FAILURE(StoryConstant.GET_OWN_STORIES):
     case FAILURE(StoryConstant.GET_ALL_STORIES):
+    case FAILURE(StoryConstant.SEARCH_STORIES):
       return {
         ...state,
         isLoading: false,

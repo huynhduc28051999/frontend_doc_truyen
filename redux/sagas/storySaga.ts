@@ -1,6 +1,6 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
 import Api from 'shared/config/api';
-import { URL_ALL_STORIES, URL_CHAPPER, URL_OWN_STORIES, URL_STORY } from 'shared/constant/endpoints';
+import { URL_ALL_STORIES, URL_CHAPPER, URL_OWN_STORIES, URL_SEARCH_STORIES, URL_STORY } from 'shared/constant/endpoints';
 import { Action, ResponseGenerator } from 'types/action';
 import { StoryConstant, REQUEST, SUCCESS, FAILURE } from '../constants';
 import { toast } from 'react-toastify';
@@ -110,12 +110,38 @@ function* getAllStories(action: Action) {
   }
 }
 
+function* searchStories(action: Action) {
+  const { params } = action.payload || {};
+  try {
+    const searchStoriesApi = Api.get(URL_SEARCH_STORIES, { params });
+    const response: ResponseGenerator = yield call(() => searchStoriesApi);
+    if (response?.data?.data) {
+      yield put({
+        type: SUCCESS(StoryConstant.SEARCH_STORIES),
+        payload: {
+          response: {
+            stories: response?.data?.data.stories,
+            pagination: response?.data?.data.pagination
+          }
+        },
+      });
+    }
+  } catch (error) {
+  toast.error('Lấy danh sách thất bại')
+    yield put({
+      type: FAILURE(StoryConstant.SEARCH_STORIES),
+      error,
+    });
+  }
+}
+
 function* storySaga() {
   yield takeEvery(REQUEST(StoryConstant.CREATE_STORY), createStory);
   yield takeEvery(REQUEST(StoryConstant.GET_OWN_STORIES), getOwnStories);
   yield takeEvery(REQUEST(StoryConstant.GET_SOTRY_ID), getStoryId);
   yield takeEvery(REQUEST(StoryConstant.CREATE_CHAPPER), createChapper);
   yield takeEvery(REQUEST(StoryConstant.GET_ALL_STORIES), getAllStories);
+  yield takeEvery(REQUEST(StoryConstant.SEARCH_STORIES), searchStories);
 }
 
 export default storySaga;
