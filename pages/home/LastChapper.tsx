@@ -1,13 +1,55 @@
-import React from 'react'
+import React, { Dispatch, useEffect } from 'react'
+import { connect, ConnectedProps } from 'react-redux'
 import { Col, Container, Row } from 'reactstrap'
+import { paginationStories } from 'redux/actions/homeAction'
+import { Payload } from 'types/action'
+import { Action } from "types";
 import ReadingSeries from './ReadingSeries'
 import ReadMore from './ReadMore'
 import RecentComment from './RecentComment'
 import ThumItemFLow from './ThumItemFLow'
+import Loader from '@/components/loader'
+import { StoryConstant } from 'redux/constants'
 
-function LastChapper() {
+function LastChapper(props: PropsFromRedux) {
+  const {
+    loadingNewChapStories,
+    loadingNewStories,
+    newChapStories,
+    newStories,
+    getStories
+  } = props;
+
+  useEffect(() => {
+    getStories(
+      {
+        params: {
+          page: 1,
+          perPage: 17,
+          type: [1,2,3],
+          status: [1,2,3],
+          sort: 'updatedAt'
+        }
+      },
+      StoryConstant.NEW_CHAP_STORIES
+    )
+
+    getStories(
+      {
+        params: {
+          page: 1,
+          perPage: 5,
+          type: [1,2,3],
+          status: [1,2,3],
+          sort: 'createdAt'
+        }
+      },
+      StoryConstant.NEW_STORIES
+    )
+  }, [])
+
   return (
-    <Container fluid="md">
+    <Container fluid="lg">
       <Row>
         <Col xs={12} lg={9}>
           <section className="index-section thumb-section-flow last-chapter translation three-row">
@@ -15,10 +57,11 @@ function LastChapper() {
               <span className="sts-bold">Chương</span><span className="sts-empty">mới nhất</span>
             </header>
             <Row>
-              {Array(17).fill(0).map((item, index) => (
-                <ThumItemFLow key={index} />
+              {loadingNewChapStories && <Loader />}
+              {newChapStories.map((item: any) => (
+                <ThumItemFLow key={item.id} story={item} />
               ))}
-              <ReadMore />
+              {!loadingNewChapStories && <ReadMore />}
             </Row>
           </section>
           <section className="index-section thumb-section-flow last-chapter translation one-row">
@@ -26,10 +69,11 @@ function LastChapper() {
               <span className="sts-bold">Sáng tác</span><span className="sts-empty">mới nhất</span>
             </header>
             <Row>
-              {Array(5).fill(0).map((item, index) => (
-                <ThumItemFLow key={index} />
+              {loadingNewStories && <Loader />}
+              {newStories.map((item: any) => (
+                <ThumItemFLow key={item.id} story={item} />
               ))}
-              <ReadMore />
+              {!loadingNewStories  && <ReadMore />}
             </Row>
           </section>
         </Col>
@@ -42,4 +86,26 @@ function LastChapper() {
   )
 }
 
-export default LastChapper
+const mapStateToProps = (state: any) => {
+  const {
+    loadingNewChapStories,
+    loadingNewStories,
+    newChapStories,
+    newStories
+  } = state.homeReducer;
+  return {
+    loadingNewChapStories,
+    loadingNewStories,
+    newChapStories,
+    newStories
+  }
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+  getStories: (payload: Payload, type: string) => dispatch(paginationStories(payload, type)),
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(LastChapper);

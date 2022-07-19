@@ -1,46 +1,56 @@
 import Link from "next/link";
-import React from "react";
+import React, { Dispatch, useEffect } from "react";
 import { Col, Row, Container } from "reactstrap";
 import Carousel from 'react-multi-carousel';
 import PopularThumb from "./PopularThumb";
 import { Circle } from 'react-feather';
+import { connect, ConnectedProps } from "react-redux";
+import { Action } from "types";
+import { Payload } from "types/action";
+import Loader from "@/components/loader";
+import { paginationStories } from "redux/actions/homeAction";
+import { StoryConstant } from "redux/constants";
+import { getDiscuss } from "redux/actions/discussAction";
+import moment from 'moment';
+import 'moment/locale/vi';
+moment.locale('vi');
 
-const DailyRecentViews = () => {
+const DailyRecentViews = (props: PropsFromRedux) => {
+  const {
+    loadingTopStories,
+    topStories,
+    getTopStories,
+    loadingDiscuss,
+    discuss,
+    getDisscussAction
+  } = props;
+
+  useEffect(() => {
+    getTopStories(
+      {
+        params: {
+          page: 1,
+          perPage: 8,
+          type: [1,2,3],
+          status: [1,2,3],
+          sort: 'viewCount'
+        }
+      },
+      StoryConstant.TOP_STORIES
+    )
+    getDisscussAction({ params: { perPage: 8, category: 'all' }})
+  }, [])
+
   return (
-    <Container fluid="md" className="daily-recent-container">
+    <Container fluid="lg" className="daily-recent-container">
       <Row>
         <Col xs={12} lg={9}>
           <div className="daily-recent_views">
             <header className="title">
               <span className="top-tab_title title-active">Nổi bật</span>
-              <span className="top-tab_title">
-                <Link
-                  href={{
-                    pathname: "danh-sach",
-                    query: {
-                      truyendich: 1,
-                      sapxep: "topthang",
-                    },
-                  }}
-                >
-                  Top tháng
-                </Link>
-              </span>
-              <span className="top-tab_title">
-                <Link
-                  href={{
-                    pathname: "danh-sach",
-                    query: {
-                      truyendich: 1,
-                      sapxep: "top",
-                    },
-                  }}
-                >
-                  Toàn t/gian
-                </Link>
-              </span>
             </header>
             <div className="tns-outer" id="tns1-ow">
+              {loadingTopStories && <Loader />}
               <Carousel
                 additionalTransfrom={0}
                 arrows
@@ -94,8 +104,8 @@ const DailyRecentViews = () => {
                 slidesToSlide={2}
                 swipeable
               >
-                {Array(8).fill(0).map((item, key) => (
-                  <PopularThumb key={key} />
+                {(topStories as any[]).map((item) => (
+                  <PopularThumb key={item.id} story={item} />
                 ))}
               </Carousel>
             </div>
@@ -114,24 +124,24 @@ const DailyRecentViews = () => {
               </Link>
             </header>
             <main>
-              {Array(9).fill(0).map((item, index) => (
-                <div key={index} className="topic-item">
+              {loadingDiscuss && <Loader />}
+              {discuss.map((item: any) => (
+                <div key={item.id} className="topic-item">
                   <Row>
                     <Col xs={9} className="line-ellipsis">
                       <Circle size={18} color="#1ee865" />
-                      <Link href={{
-                        pathname: "/thao-luan"
+                      <Link href={{ pathname: '/thao-luan/[id]', query: { id: item.id }
                       }}>
-                        <span>Thảo luận cho tác giả OLN</span>
+                        <span>{item.title}</span>
                       </Link>
                     </Col>
                     <Col xs={3} className="topic-data text-right">
                       <time
                         className="timeago"
-                        title="10-07-2022 18:48:49"
-                        dateTime="2022-07-10T18:48:49+07:00"
+                        title={new Date(item.createdAt).toString()}
+                        dateTime={new Date(item.createdAt).toString()}
                       >
-                        1 giờ
+                        {moment(item.createdAt).fromNow(true)}
                       </time>
                     </Col>
                   </Row>
@@ -145,4 +155,29 @@ const DailyRecentViews = () => {
   );
 };
 
-export default DailyRecentViews;
+const mapStateToProps = (state: any) => {
+  const {
+    loadingTopStories,
+    topStories,
+  } = state.homeReducer;
+  const {
+    discuss,
+    isLoading
+  } = state.discussReducer;
+  return {
+    loadingTopStories,
+    topStories,
+    discuss,
+    loadingDiscuss: isLoading
+  }
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+  getTopStories: (payload: Payload, type: string) => dispatch(paginationStories(payload, type)),
+  getDisscussAction: (payload: Payload) => dispatch(getDiscuss(payload)),
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(DailyRecentViews);

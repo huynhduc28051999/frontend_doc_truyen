@@ -138,7 +138,7 @@ axios.interceptors.request.use(config => {
 
 axios.defaults.paramsSerializer = params =>
   stringifyParams({
-    params: decamelizeKeys({ ...params }),
+    params,
     option: {
       encode: !isNil(params?.tags) || false,
     },
