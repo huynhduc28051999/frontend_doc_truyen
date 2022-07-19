@@ -52,7 +52,7 @@ function* getOwnDiscuss(action: Action) {
 function* getAllDiscuss(action: Action) {
   const { params } = action.payload || {};
   try {
-    const getAllDiscussApi = Api.get(URL_ALL_DISCUSS, params);
+    const getAllDiscussApi = Api.get(URL_ALL_DISCUSS, { params });
     const response: ResponseGenerator = yield call(() => getAllDiscussApi);
     if (response?.data?.data) {
       yield put({

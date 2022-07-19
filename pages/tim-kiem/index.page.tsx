@@ -185,6 +185,7 @@ function TimKiem(props: PropsFromRedux) {
                     type="submit"
                     className="button button-primary-green"
                     value="Áp dụng"
+                    onClick={onSearch}
                   />
                 </div>
               </div>
@@ -210,6 +211,7 @@ function TimKiem(props: PropsFromRedux) {
                     type="submit"
                     className="button button-primary-green"
                     value="Áp dụng"
+                    onClick={onSearch}
                   />
                 </div>
               </div>

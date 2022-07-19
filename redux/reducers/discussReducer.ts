@@ -30,6 +30,7 @@ const reducer = (state = initialState, action: Action) => {
         isError: true,
       };
     case REQUEST(discussConstant.GET_OWN_DISCUSS):
+    case REQUEST(discussConstant.GET_ALL_DISCUSS):
       return {
         ...state,
         isLoading: true,
@@ -37,13 +38,15 @@ const reducer = (state = initialState, action: Action) => {
         discuss: []
       };
     case SUCCESS(discussConstant.GET_OWN_DISCUSS):
+    case SUCCESS(discussConstant.GET_ALL_DISCUSS):
       return {
         ...state,
         isLoading: false,
         isError: false,
-        discuss: payload?.response
+        discuss: payload?.response || []
       };
     case FAILURE(discussConstant.GET_OWN_DISCUSS):
+    case FAILURE(discussConstant.GET_ALL_DISCUSS):
       return {
         ...state,
         isLoading: false,

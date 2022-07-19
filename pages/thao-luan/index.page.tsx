@@ -1,79 +1,83 @@
 import Footer from "@/components/Footer";
 import MainLayout from "@/components/layout/mainLayout";
 import TopGroup from "@/components/TopGroup";
-import React from "react";
+import React, { Dispatch, useEffect, useState } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory, { PaginationListStandalone, PaginationProvider } from "react-bootstrap-table2-paginator";
 import { Input } from "reactstrap";
-import { Plus } from "react-feather";
+import { Eye, Plus } from "react-feather";
+import { formatDate } from "shared/utils";
+import { useRouter } from "next/router";
+import { categoryDiscuss } from "redux/constants";
+import { Action } from "types";
+import { Payload } from "types/action";
+import { connect, ConnectedProps } from "react-redux";
+import { getDiscuss } from "redux/actions/discussAction";
+import Loader from "@/components/loader";
 
-const data = [
-  {
-    id: 'Không biết nữa 1',
-    name: 'Tin tức',
-    comment:  60,
-    count: 9082,
-    time: '2 tháng',
-    last: 'huynh thien an'
-  },
-  {
-    id: 'Không biết nữa 2',
-    name: 'Tin tức',
-    comment:  60,
-    count: 9082,
-    time: '2 tháng',
-    last: 'huynh thien an'
-  },
-  {
-    id: 'Không biết nữa 3',
-    name: 'Tin tức',
-    comment:  60,
-    count: 9082,
-    time: '2 tháng',
-    last: 'huynh thien an'
-  }
-]
+function ThaoLuan(props: PropsFromRedux) {
+  const { getDisscussAction, discuss, isLoading } = props;
+  const [category, setCategory] = useState('all');
+  const router = useRouter();
 
-const columns = [
-  {
-    dataField: "id",
-    text: "Chủ đề",
-  },
-  {
-    dataField: "name",
-    text: "Chuyên mục",
-  },
-  {
-    dataField: "comment",
-    text: "Bình Luận",
-  },
-  {
-    dataField: "count",
-    text: "Lượt xem",
-  },
-  {
-    dataField: "time",
-    text: "Gần nhất",
-  },
-  {
-    dataField: "last",
-    text: "Người đăng cuối",
-  },
-];
+  const columns = [
+    {
+      dataField: "title",
+      text: "Tiêu đề",
+    },
+    {
+      dataField: "user.username",
+      text: "Người đăng",
+    },
+    {
+      dataField: "category",
+      text: "Chuyên mục",
+      formatter: (data: keyof typeof categoryDiscuss) => categoryDiscuss[data],
+    },
+    {
+      dataField: "createdAt",
+      text: "ngày đăng",
+      formatter: (data: number) => formatDate(data),
+    },
+    {
+      dataField: 'action',
+      isDummyField: true,
+      text: 'Điều khiển',
+      formatter: (_: undefined, row: any) => {
+        const FormatterComponent = (
+          <div className='d-flex justify-content-center'>
+            <Eye
+              style={{ marginRight: 10 }}
+              role="button"
+              onClick={() => router.push({ pathname: '/thao-luan/[id]', query: { id: row.id } })} />
+          </div>
+        );
+        return FormatterComponent;
+      },
+      headerStyle: { width: 100 },
+    },
+  ];
 
-function ThaoLuan() {
   const pagination = paginationFactory({
     custom: true,
     hideSizePerPage: true,
-    sizePerPage: 1,
-    totalSize: 3,
+    sizePerPage: 20,
+    totalSize: discuss.length,
     withFirstAndLast: true,
     lastPageText: 'Cuối',
     firstPageText: 'Đầu',
-    paginationSize: 1,
+    paginationSize: 20,
     page: 1,
   });
 
+  const onCategoryChange = (event: any) => {
+    setCategory(event.target.value)
+  }
+
+  useEffect(() => {
+    getDisscussAction({ params: { category: category === 'all' ? category : Number(category) }})
+  }, [category])
+  
   return (
     <MainLayout customClass="tim-kiem">
       <TopGroup />
@@ -94,23 +98,22 @@ function ThaoLuan() {
           <section className="board-toolkit clear">
             <div className="board_categ-list">
               <Input
-                id="exampleSelectMulti"
-                name="selectMulti"
                 type="select"
                 placeholder="Đánh giá"
                 defaultValue="all"
+                onChange={onCategoryChange}
               >
                 <option value="all">Tất cả</option>
-                <option value="notification">Thông báo</option>
-                <option value="new">Tin tức</option>
-                <option value="question">Hỏi đáp</option>
-                <option value="rate">Đánh giá</option>
-                <option value="discuss">Thảo luận</option>
+                <option value="1">Thông báo</option>
+                <option value="2">Tin tức</option>
+                <option value="3">Hỏi đáp</option>
+                <option value="4">Đánh giá</option>
+                <option value="5">Thảo luận</option>
               </Input>
             </div>
             <a
               className="button button-newpost button-green"
-              href="https://docln.net/action/page/create"
+              href="/admin/thao-luan/them-thao-luan"
             >
               <Plus size={18} />Thêm
             </a>
@@ -119,6 +122,7 @@ function ThaoLuan() {
             className="board-list has-pagination"
             style={{ marginTop: 20 }}
           >
+            {isLoading && <Loader />}
             <PaginationProvider pagination={pagination}>
               {({ paginationProps, paginationTableProps }) => (
                 <div>
@@ -127,10 +131,9 @@ function ThaoLuan() {
                     headerWrapperClasses="thead-light"
                     bodyClasses="text-break"
                     bordered
-                    remote={{ pagination: true, sort: true }}
                     hover
                     keyField='id'
-                    data={data}
+                    data={discuss}
                     columns={columns}
                     onTableChange={() => {}}
                   />
@@ -148,4 +151,16 @@ function ThaoLuan() {
   );
 }
 
-export default ThaoLuan;
+const mapStateToProps = (state: any) => ({
+  isLoading: state.discussReducer.isLoading,
+  discuss: state.discussReducer.discuss,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+  getDisscussAction: (payload: Payload) => dispatch(getDiscuss(payload)),
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(ThaoLuan);

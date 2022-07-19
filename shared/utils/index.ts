@@ -31,6 +31,7 @@ function getUrlRoot(pathname?: string) {
 }
 
 function formatDate(date: string | number) {
+  if (!date) return ''
   return format(new Date(date), 'dd/MM/yyyy')
 }
 

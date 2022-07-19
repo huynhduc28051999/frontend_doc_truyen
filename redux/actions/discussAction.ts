@@ -14,3 +14,8 @@ export const getdiscussId = (payload: Payload) => ({
   type: REQUEST(discussConstant.GET_DISCUSS_ID),
   payload,
 });
+
+export const getDiscuss = (payload: Payload) => ({
+  type: REQUEST(discussConstant.GET_ALL_DISCUSS),
+  payload,
+});
