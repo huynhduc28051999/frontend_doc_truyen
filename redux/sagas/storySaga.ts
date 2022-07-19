@@ -36,7 +36,9 @@ function* getOwnStories(action: Action) {
       yield put({
         type: SUCCESS(StoryConstant.GET_OWN_STORIES),
         payload: {
-          response: response?.data?.data
+          response: {
+            stories: response?.data?.data
+          }
         },
       });
     }
@@ -96,7 +98,9 @@ function* getAllStories(action: Action) {
       yield put({
         type: SUCCESS(StoryConstant.GET_ALL_STORIES),
         payload: {
-          response: response?.data?.data
+          response: {
+            stories: response?.data?.data
+          }
         },
       });
       callback?.(response?.data?.data?.[0])
