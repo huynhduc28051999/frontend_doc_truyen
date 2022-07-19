@@ -82,6 +82,11 @@ const reducer = (state = initialState, action: Action | any) => {
         user: {},
         error,
       };
+    case REQUEST(authConstants.LOGOUT):
+      return {
+        ...state,
+        user: {}
+      };
     default:
       return state;
   }

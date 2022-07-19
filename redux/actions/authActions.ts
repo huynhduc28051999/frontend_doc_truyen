@@ -6,11 +6,6 @@ export const loginUser = (payload: Payload) => ({
   payload,
 });
 
-export const logout = (callback: any) => ({
-  type: REQUEST(authConstants.LOGOUT),
-  callback,
-});
-
 export const getCurrentUser = (payload: Payload) => ({
   type: REQUEST(authConstants.GET_ME),
   payload,
@@ -19,4 +14,8 @@ export const getCurrentUser = (payload: Payload) => ({
 export const registerAction = (payload: Payload) => ({
   type: REQUEST(authConstants.REGISTER),
   payload,
+});
+
+export const logoutAction = () => ({
+  type: REQUEST(authConstants.LOGOUT)
 });

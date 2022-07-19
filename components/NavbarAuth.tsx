@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { connect, ConnectedProps } from "react-redux";
+import { connect, ConnectedProps, useDispatch } from "react-redux";
 import {
   Collapse,
   Nav,
@@ -15,10 +15,21 @@ import {
   Button
 } from "reactstrap";
 import { Home } from 'react-feather';
+import { useRouter } from "next/router";
+import { CookiesStorage } from "shared/config/cookie";
+import { logoutAction } from "redux/actions";
 
 const NarbarAuth = ({ currentUser }: PropsFromRedux) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const onLogout = () => {
+    CookiesStorage.clearAccessToken();
+    dispatch(logoutAction())
+    router.replace('/dang-nhap')
+  }
   return (
     <div className='position-sticky'>
       <Navbar color="light" expand="md" light>
@@ -60,7 +71,7 @@ const NarbarAuth = ({ currentUser }: PropsFromRedux) => {
                 </UncontrolledDropdown>
               </Nav>
               <NavbarBrand>
-                <Button>Đăng xuất</Button>
+                <Button onClick={onLogout}>Đăng xuất</Button>
               </NavbarBrand>
             </>
           ): (
