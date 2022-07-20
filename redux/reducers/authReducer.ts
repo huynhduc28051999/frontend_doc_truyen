@@ -44,6 +44,27 @@ const reducer = (state = initialState, action: Action | any) => {
         user: {},
         error,
       };
+    case REQUEST(authConstants.LOGIN_WITH_GOOGLE):
+      return {
+        ...state,
+        isLoading: true,
+        type: action.type,
+        messageError: '',
+      };
+    case SUCCESS(authConstants.LOGIN_WITH_GOOGLE):
+      return {
+        ...state,
+        isLoading: false,
+        user: payload?.response,
+      };
+    case FAILURE(authConstants.LOGIN_WITH_GOOGLE):
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        user: {},
+        error,
+      };
     case REQUEST(authConstants.REGISTER):
       return {
         ...state,

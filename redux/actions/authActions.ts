@@ -6,6 +6,11 @@ export const loginUser = (payload: Payload) => ({
   payload,
 });
 
+export const loginWithGoogle = (payload: Payload) => ({
+  type: REQUEST(authConstants.LOGIN_WITH_GOOGLE),
+  payload,
+});
+
 export const getCurrentUser = (payload: Payload) => ({
   type: REQUEST(authConstants.GET_ME),
   payload,
