@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import moment from "moment";
+import "moment/locale/vi";
+moment.locale("vi");
 
 function Comment(props: any) {
   const { comment, ownId } = props;
@@ -43,10 +46,10 @@ function Comment(props: any) {
               <a href="/thao-luan/77-quy-dinh-doi-voi-oln?comment_id=1874304#ln-comment-1874304">
                 <time
                   className="timeago"
-                  title="12-07-2022 13:16:04"
-                  dateTime="2022-07-12T13:16:04+07:00"
+                  title={new Date(comment.createdAt).toString()}
+                  dateTime={new Date(comment.createdAt).toString()}
                 >
-                  7 giờ
+                  {moment(comment.createdAt).fromNow(true)}
                 </time>
               </a>
             </span>

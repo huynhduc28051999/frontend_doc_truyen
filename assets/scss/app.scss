@@ -16,3 +16,8 @@ form {
     color:red;
   }
 }
+.disabled, [disabled] {
+  cursor: not-allowed;
+  opacity: .5;
+  pointer-events: none;
+}

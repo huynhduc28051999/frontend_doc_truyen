@@ -46,7 +46,7 @@ function Comments(props: any) {
   }
 
   return (
-    <section className="basic-section">
+    <section className="basic-section" id="chapter-comments">
       <main>
         <section className="ln-comment">
           <header>

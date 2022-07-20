@@ -1,13 +1,15 @@
 import { Action } from 'types/action';
-import { detailStory } from '../constants';
+import { detailStory, chapperConstant } from '../constants';
 import { FAILURE, REQUEST, SUCCESS } from '../constants';
 
 const initialState = {
   isLoading: false,
   isLoadingOther: false,
+  isLoadingChapper: false,
   isError: false,
   story: {},
-  otherStories: []
+  otherStories: [],
+  chapper: {},
 };
 
 const reducer = (state = initialState, action: Action) => {
@@ -51,6 +53,26 @@ const reducer = (state = initialState, action: Action) => {
       return {
         ...state,
         isLoadingOther: false,
+        isError: true,
+      };
+    case REQUEST(chapperConstant.GET_CHAPPER):
+      return {
+        ...state,
+        isLoadingChapper: true,
+        isError: false,
+        chapper: {}
+      };
+    case SUCCESS(chapperConstant.GET_CHAPPER):
+      return {
+        ...state,
+        isLoadingChapper: false,
+        isError: false,
+        chapper: payload?.response
+      };
+    case FAILURE(chapperConstant.GET_CHAPPER):
+      return {
+        ...state,
+        isLoadingChapper: false,
         isError: true,
       };
     default:

@@ -11,6 +11,10 @@ const CookieKey = {
   networkError: 'networkError',
 };
 
+const LocalStorageKey = {
+  reading_series: 'reading_series'
+};
+
 const RouterPath = {
   Home: '/',
   Register: '/dang-ky',
@@ -19,4 +23,4 @@ const RouterPath = {
   Admin: '/admin'
 };
 
-export { USER_TYPE, CookieKey, RouterPath };
+export { USER_TYPE, CookieKey, RouterPath, LocalStorageKey };
