@@ -120,7 +120,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                 </Col>
               </FormGroup>
               <FormGroup row>
-                <Label sm={2}>Tên khác</Label>
+                <Label sm={2}>Ảnh đại diện</Label>
                 <Col sm={10} className='pr-4'>
                   <Input invalid={!!errors.altname} type='file' onChange={onSelectFile} accept="image/*"/>
                 </Col>
@@ -164,27 +164,23 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                   <FormFeedback>{errors?.type?.message}</FormFeedback>
                 </Col>
               </FormGroup>
-              {/* <FormGroup row className='required'>
+              <FormGroup row className='required'>
                 <Label sm={2}>Nhóm dịch</Label>
                 <Col sm={10} className='pr-4'>
                   <Controller
-                    name="type"
+                    name="group"
                     control={control}
                     render={({ field }) => (
-                      <Input invalid={!!errors.type} type="select" {...field} >
-                        <option value="1">Truyện dịch</option>
-                        <option value="2">Truyện convert</option>
-                        <option value="3">Truyện sáng tác</option>
-                      </Input>
+                      <Input invalid={!!errors.type} type="text" {...field} />
                     )}
                   />
-                  <FormFeedback>{errors?.type?.message}</FormFeedback>
+                  <FormFeedback>{errors?.group?.message}</FormFeedback>
                 </Col>
-              </FormGroup> */}
+              </FormGroup>
               <FormGroup row className='required'>
                 <Label sm={2}>Thể loại</Label>
                 <Col sm={10} className='pr-4'>
-                  {TAG.map((item, index) => (
+                  {TAG.map((item: any, index: number) => (
                     <label className="checkbox-inline" style={{ width: 130 }} key={item.value}>
                       <Checkbox control={control} name={`genders[${index}]`} value={item.value} /> &nbsp;
                       {item.name}
