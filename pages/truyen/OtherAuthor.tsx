@@ -1,17 +1,19 @@
 import React from 'react'
+import truncate from 'lodash/truncate';
+import { removeTags } from 'shared/utils';
 
-function OtherAuthor() {
+function OtherAuthor({ story }: any) {
   return (
     <li>
       <div className="others-img no-padding">
         <div className="a6-ratio">
-          <div className="content img-in-ratio" style={{ backgroundImage: "url('https://docln.net/img/nocover.jpg')" }}>
+          <div className="content img-in-ratio" style={{ backgroundImage: `url(${story.avatar})` }}>
           </div>
         </div>
       </div>
       <div className="others-info">
-        <h5 className="others-name"><a href="/truyen/8858-please-forgive-me">Please Forgive Me</a></h5>
-        <small className="series-summary">Gặp anh có lẽ là phước lành lớn nhất đời em. Cảm ơn an...</small>
+        <h5 className="others-name"><a href={`/truyen/${story.id}`}>{story.title}</a></h5>
+        <small className="series-summary">{truncate(removeTags(story.summary || '') || '', { length: 55, separator: '...'})}</small>
       </div>
     </li>
   )

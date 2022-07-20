@@ -1,12 +1,14 @@
 import React from 'react'
+import { formatDate } from 'shared/utils';
 
-function Chuong() {
+function Chuong(props: any) {
+  const { chapper } = props;
   return (
     <li className="">
       <div className="chapter-name">
-        <a href="/truyen/11586-shimotsuki-wa-mob-ga-suki/c92645-chuong-02-thanh-mai-truc-ma-cua-nhan-vat-chinh-harem-la-mot-nguoi-thich-tam-chuyen" title="Chương 02 - Thanh mai trúc mã của nhân vật chính Harem là một người thích tám chuyện">Chương 02 - Thanh mai trúc mã của nhân vật chính Harem là một người thích tám chuyện</a>
+        <a href={`/chap/${chapper?.id}`} title={chapper?.title}>{chapper?.title}</a>
       </div>
-      <div className="chapter-time">24/01/2022</div>
+      <div className="chapter-time">{formatDate(chapper?.createdAt)}</div>
     </li>
   )
 }

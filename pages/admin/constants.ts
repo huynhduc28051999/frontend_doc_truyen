@@ -1,4 +1,4 @@
-const TAG = [
+const TAG: any = [
   { value: 1, name: 'Action'},
   { value: 49, name: 'Adapted to Anime'},
   { value: 51, name: 'Adapted to Drama CD'},
@@ -59,13 +59,13 @@ const TAG = [
   { value: 48, name: 'Yuri'},
 ];
 
-const STORY_STATUS = {
+const STORY_STATUS: any = {
   1: 'Đang tiến hành',
   2: 'Tạm ngưng',
   3: 'Đã hoàn thành'
 }
 
-const STORY_TYPE = {
+const STORY_TYPE: any = {
   1: 'Truyện dịch',
   2: 'Truyện convert',
   3: 'Truyện sáng tác',

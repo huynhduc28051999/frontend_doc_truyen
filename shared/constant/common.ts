@@ -11,23 +11,12 @@ const CookieKey = {
   networkError: 'networkError',
 };
 
-const ROUTER = {
-  Home: '/',
-  PageNotFound: '/404',
-  Login: '/auth',
-  Dashboard: '/order',
-};
-
 const RouterPath = {
-  IssueMeetingURL: '/meeting-url',
-  UserManagement: '/users',
-  Home: '/dashboard',
+  Home: '/',
+  Register: '/dang-ky',
   PageNotFound: '/404',
   Login: '/dang-nhap',
-  ReissuePassword: '/reissue-password',
-  BusinessManagement: '/companies',
-  ContractManagement: '/contracts',
-  ResetPassword: '/reset-password',
+  Admin: '/admin'
 };
 
-export { ROUTER, USER_TYPE, CookieKey, RouterPath };
+export { USER_TYPE, CookieKey, RouterPath };

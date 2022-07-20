@@ -31,6 +31,7 @@ const reducer = (state = initialState, action: Action) => {
       };
     case REQUEST(discussConstant.GET_OWN_DISCUSS):
     case REQUEST(discussConstant.GET_ALL_DISCUSS):
+    case REQUEST(discussConstant.GET_DISCUSS_By_STORY):
       return {
         ...state,
         isLoading: true,
@@ -39,6 +40,7 @@ const reducer = (state = initialState, action: Action) => {
       };
     case SUCCESS(discussConstant.GET_OWN_DISCUSS):
     case SUCCESS(discussConstant.GET_ALL_DISCUSS):
+    case SUCCESS(discussConstant.GET_DISCUSS_By_STORY):
       return {
         ...state,
         isLoading: false,
@@ -47,6 +49,7 @@ const reducer = (state = initialState, action: Action) => {
       };
     case FAILURE(discussConstant.GET_OWN_DISCUSS):
     case FAILURE(discussConstant.GET_ALL_DISCUSS):
+    case FAILURE(discussConstant.GET_DISCUSS_By_STORY):
       return {
         ...state,
         isLoading: false,

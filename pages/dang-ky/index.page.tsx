@@ -9,6 +9,7 @@ import * as yup from 'yup';
 
 import { Action } from 'types';
 import { registerAction } from 'redux/actions';
+import NoAuthGuard from '@/components/HOC/noAuthGuard';
 
 const Register = (props: PropsFromRedux) => {
   const { register: registerUser, loading } = props;
@@ -106,4 +107,4 @@ const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof withConnect>;
 
-export default withConnect(Register);
+export default NoAuthGuard(withConnect(Register));

@@ -1,7 +1,15 @@
 import Comments from '@/components/Comments'
-import React from 'react'
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react'
 
-function Chuong() {
+function Chuong(props: any) {
+  const router = useRouter();
+  const { id } = router.query;
+
+  useEffect(() => {
+    
+  }, )
+
   return (
     <main id="mainpart" className="reading-page style-3">
       <div className="container">

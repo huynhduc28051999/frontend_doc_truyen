@@ -34,5 +34,13 @@ function formatDate(date: string | number) {
   if (!date) return ''
   return format(new Date(date), 'dd/MM/yyyy')
 }
+function removeTags(str: string) {
+  if ((str===null) || (str===''))
+    return false;
+  else
+    str = str.toString();
+        
+  return str.replace( /(<([^>]+)>)/ig, '');
+}
 
-export { stringifyParams, camelToSnake, getCurrentDomain, getUrlRoot, isBrowser, formatDate };
+export { stringifyParams, camelToSnake, getCurrentDomain, getUrlRoot, isBrowser, formatDate, removeTags };

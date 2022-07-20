@@ -1,40 +1,70 @@
-import React from "react";
+import React, { Dispatch, useEffect } from "react";
+import { connect } from "react-redux";
+import { createComment, getComments } from "redux/actions/commentAction";
+import { Action } from "types";
+import { Payload } from "types/action";
 import Comment from "./Comment";
+import CommentInput from "./Input/CommentInput";
+import Loader from "./loader";
 
-function Comments() {
+function Comments(props: any) {
+  const {
+    currentUser,
+    storyId,
+    discussId,
+    chapperId,
+    getCommentsAction,
+    comments,
+    isLoading,
+    ownId,
+    createCommentAction
+  } = props;
+
+  useEffect(() => {
+    let by = "storyId";
+    if (discussId) by = "discussId";
+    if (chapperId) by = "chapperId";
+    if (storyId || discussId || chapperId) {
+      getCommentsAction({
+        params: {
+          id: storyId ?? discussId ?? chapperId,
+          by,
+        },
+      });
+    }
+  }, [storyId, discussId, chapperId]);
+
+  const hanldeCreateComment = (content: string) => {
+    createCommentAction({
+      params: {
+        storyId,
+        discussId,
+        chapperId,
+        content
+      }
+    })
+  }
+
   return (
     <section className="basic-section">
       <main>
         <section className="ln-comment">
           <header>
-            <h3>5616 Bình luận </h3>
+            <h3>{comments.length} Bình luận </h3>
           </header>
           <main className="ln-comment-body">
-            <div className="ln-comment_sign-in long-text">
-              Bạn phải <a href="/login">đăng nhập</a> hoặc{" "}
-              <a href="/register">tạo tài khoản</a> để bình luận.
-            </div>
-            {Array(10).fill(0).map((item, index) => (
-              <Comment key={index} />
-            ))}
-            <div className="ln-comment-page">
-              <div className="pagination-footer">
-                <div className="pagination_wrap">
-                  {/* <a
-                    href=""
-                    className="paging_item paging_prevnext prev  disabled "
-                  >
-                    Trước
-                  </a>
-                  <a
-                    href="https://docln.net/thao-luan/77-quy-dinh-doi-voi-oln?page=2"
-                    className="paging_item paging_prevnext next"
-                  >
-                    Sau
-                  </a> */}
-                </div>
+            {!currentUser.id ? (
+              <div className="ln-comment_sign-in long-text">
+                Bạn phải <a href="/dang-nhap">đăng nhập</a> hoặc{" "}
+                <a href="/dang-ky">tạo tài khoản</a> để bình luận.
               </div>
-            </div>{" "}
+            ) : (
+              <CommentInput onSubmit={hanldeCreateComment} />
+            )}
+            {isLoading && <Loader />}
+            {comments.map((item: any) => (
+              <Comment key={item.id} comment={item} ownId={ownId} />
+            ))}
           </main>
         </section>
       </main>
@@ -42,4 +72,17 @@ function Comments() {
   );
 }
 
-export default Comments;
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+  getCommentsAction: (payload: Payload) => dispatch(getComments(payload)),
+  createCommentAction: (payload: Payload) => dispatch(createComment(payload)),
+});
+
+const mapStateToProps = (state: any) => {
+  const { user } = state.authReducer;
+  const { comments, isLoading } = state.commentReducer;
+  return { currentUser: user, comments, isLoading };
+};
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+export default connector(Comments);
