@@ -1,7 +1,7 @@
 import React, { Dispatch, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Label, FormGroup, Col, Input, FormFeedback, Form, Container, CardBody, Button } from 'reactstrap';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { connect, ConnectedProps } from 'react-redux';
 import dynamic from "next/dynamic";
@@ -70,9 +70,9 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                   <Controller
                     name="title"
                     control={control}
-                    render={({ field }) => <Input invalid={!!errors.title} type="text" {...field} />}
+                    render={({ field }) => <input className="form-control" type="text" {...field} />}
                   />
-                  <FormFeedback>{errors?.title?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{errors?.title?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup className='required'>
@@ -98,7 +98,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                       />
                     )}
                   />
-                  <FormFeedback>{errors?.content?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{errors?.content?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row className='required'>
@@ -117,7 +117,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                       </Input>
                     )}
                   />
-                  <FormFeedback>{errors?.category?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{errors?.category?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row className='required'>
@@ -134,7 +134,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                       </Input>
                     )}
                   />
-                  <FormFeedback>{errors?.seriesId?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{errors?.seriesId?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup className="form-group mb-0 pt-2 text-center">

@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import { Action } from "types";
@@ -36,7 +36,7 @@ const Login = (props: PropsFromRedux) => {
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(schema),
-    mode: "onBlur",
+    mode: "onChange",
   });
 
   const onSubmit = (data: any) => {
@@ -72,7 +72,7 @@ const Login = (props: PropsFromRedux) => {
                           >
                             Tên đăng nhập hoặc Email
                           </Label>
-                          <Input {...register("email")} />
+                          <input className="form-control" {...register("email")} />
                           {errors.email && (
                             <p className="text-danger mb-0">
                               {(errors as any)?.email?.message}
@@ -87,7 +87,7 @@ const Login = (props: PropsFromRedux) => {
                           >
                             Mật khẩu
                           </Label>
-                          <Input type="password" {...register("password")} />
+                          <input className="form-control" type="password" {...register("password")} />
                           {errors.password && (
                             <p className="text-danger mb-0">
                               {(errors as any)?.password?.message}

@@ -5,7 +5,8 @@ import { FAILURE, REQUEST, SUCCESS } from '../constants';
 const initialState = {
   isLoading: false,
   isError: false,
-  discuss: []
+  discuss: [],
+  detailDiscuss: {}
 };
 
 const reducer = (state = initialState, action: Action) => {
@@ -50,6 +51,26 @@ const reducer = (state = initialState, action: Action) => {
     case FAILURE(discussConstant.GET_OWN_DISCUSS):
     case FAILURE(discussConstant.GET_ALL_DISCUSS):
     case FAILURE(discussConstant.GET_DISCUSS_By_STORY):
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
+    case REQUEST(discussConstant.GET_DISCUSS_ID):
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        detailDiscuss: {}
+      };
+    case SUCCESS(discussConstant.GET_DISCUSS_ID):
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        detailDiscuss: payload?.response || {}
+      };
+    case FAILURE(discussConstant.GET_DISCUSS_ID):
       return {
         ...state,
         isLoading: false,

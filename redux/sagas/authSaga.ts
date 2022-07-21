@@ -21,7 +21,7 @@ function* login(action: Action) {
       });
     }
 
-    Router.push('/admin')
+    Router.push('/')
   } catch (error) {
   toast.error('Đăng nhập thất bại')
     yield put({
@@ -45,7 +45,7 @@ function* loginWithGoogle(action: Action) {
       });
     }
 
-    Router.push('/admin')
+    Router.push('/')
   } catch (error) {
   toast.error('Đăng nhập với Google thất bại')
     yield put({

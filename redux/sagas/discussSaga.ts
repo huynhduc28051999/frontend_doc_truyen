@@ -93,11 +93,35 @@ function* getDiscussByStory(action: Action) {
   }
 }
 
+function* getDiscussById(action: Action) {
+  const { params } = action.payload || {};
+  try {
+    const getDiscussApi = Api.get(URL_DISCUSS, { params });
+    const response: ResponseGenerator = yield call(() => getDiscussApi);
+    if (response?.data?.data) {
+      yield put({
+        type: SUCCESS(discussConstant.GET_DISCUSS_ID),
+        payload: {
+          response: response?.data?.data
+        },
+      });
+    }
+  } catch (error) {
+  toast.error('Lối khi lấy thông tin cuộc thảo luận')
+  Router.push('/thao-luan')
+    yield put({
+      type: FAILURE(discussConstant.GET_DISCUSS_ID),
+      error,
+    });
+  }
+}
+
 function* discussSaga() {
   yield takeEvery(REQUEST(discussConstant.CREATE_DISUCSS), createDiscuss);
   yield takeEvery(REQUEST(discussConstant.GET_OWN_DISCUSS), getOwnDiscuss);
   yield takeEvery(REQUEST(discussConstant.GET_ALL_DISCUSS), getAllDiscuss);
   yield takeEvery(REQUEST(discussConstant.GET_DISCUSS_By_STORY), getDiscussByStory);
+  yield takeEvery(REQUEST(discussConstant.GET_DISCUSS_ID), getDiscussById);
 }
 
 export default discussSaga;

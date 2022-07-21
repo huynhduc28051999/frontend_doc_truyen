@@ -222,7 +222,7 @@ function TimKiem(props: PropsFromRedux) {
               </div>
               <div className="section-content">
                 <ul className="filter-type unstyled">
-                  {TAG.map((item) => (
+                  {TAG.map((item: any) => (
                     <li
                       className={`filter-type_item ${item.value === genders ? "active" : ""}`}
                       key={item.value}

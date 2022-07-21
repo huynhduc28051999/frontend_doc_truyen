@@ -4,7 +4,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Container, Row, Col, Card, CardBody, Label, FormGroup, Input, Button, Form } from 'reactstrap';
 
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 import { Action } from 'types';
@@ -29,7 +29,7 @@ const Register = (props: PropsFromRedux) => {
     formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(schema),
-    mode: 'onBlur'
+    mode: 'onChange'
   });
 
   const onSubmit = (data: any) => {
@@ -52,28 +52,28 @@ const Register = (props: PropsFromRedux) => {
                           <Label for="username" className="font-weight-bold text-dark">
                             Tên đăng nhập
                           </Label>
-                          <Input type='text' {...register('username')} />
+                          <input className="form-control" type='text' {...register('username')} />
                           {errors.username && <p className="text-danger mb-0">{(errors as any)?.username?.message}</p>}
                         </div>
                         <div className="mb-3">
                           <Label for="email" className="font-weight-bold text-dark">
                             Địa chỉ email
                           </Label>
-                          <Input {...register('email')} />
+                          <input className="form-control" {...register('email')} />
                           {errors.email && <p className="text-danger mb-0">{(errors as any)?.email?.message}</p>}
                         </div>
                         <div className="mb-3">
                           <Label for="password" className="font-weight-bold text-dark">
                             Mật khẩu
                           </Label>
-                          <Input type="password" {...register('password')} />
+                          <input className="form-control" type="password" {...register('password')} />
                           {errors.password && <p className="text-danger mb-0">{(errors as any)?.password?.message}</p>}
                         </div>
                         <div className="mb-3">
                           <Label for="passwordConfirmation" className="font-weight-bold text-dark">
                             Xác nhận mật khẩu
                           </Label>
-                          <Input type="password" {...register('passwordConfirmation')} />
+                          <input className="form-control" type="password" {...register('passwordConfirmation')} />
                           {errors.passwordConfirmation && <p className="text-danger mb-0">{(errors as any)?.passwordConfirmation?.message}</p>}
                         </div>
                         <FormGroup className="form-group mb-0 pt-2 text-center">

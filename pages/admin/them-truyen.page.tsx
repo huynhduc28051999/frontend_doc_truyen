@@ -1,7 +1,7 @@
 import React, { Dispatch, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Label, FormGroup, Col, Input, FormFeedback, Form, Container, CardBody, Button } from 'reactstrap';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { connect, ConnectedProps } from 'react-redux';
 import dynamic from "next/dynamic";
@@ -103,9 +103,9 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                   <Controller
                     name="title"
                     control={control}
-                    render={({ field }) => <Input invalid={!!errors.title} type="text" {...field} />}
+                    render={({ field }) => <input className="form-control"  type="text" {...field} />}
                   />
-                  <FormFeedback>{errors?.title?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{errors?.title?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -114,15 +114,15 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                   <Controller
                     name="altname"
                     control={control}
-                    render={({ field }) => <Input invalid={!!errors.altname} type="text" {...field} placeholder='Ngăn cách nhiều tên bằng dấu chấm phẩy ;' />}
+                    render={({ field }) => <input className="form-control" type="text" {...field} placeholder='Ngăn cách nhiều tên bằng dấu chấm phẩy ;' />}
                   />
-                  <FormFeedback>{errors?.altname?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{errors?.altname?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
                 <Label sm={2}>Ảnh đại diện</Label>
                 <Col sm={10} className='pr-4'>
-                  <Input invalid={!!errors.altname} type='file' onChange={onSelectFile} accept="image/*"/>
+                  <input className="form-control" type='file' onChange={onSelectFile} accept="image/*"/>
                 </Col>
               </FormGroup>
               <FormGroup row className='required'>
@@ -131,9 +131,9 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                   <Controller
                     name="author"
                     control={control}
-                    render={({ field }) => <Input invalid={!!errors.author} type="text" {...field} />}
+                    render={({ field }) => <input className="form-control" type="text" {...field} />}
                   />
-                  <FormFeedback>{errors?.author?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{errors?.author?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -142,9 +142,9 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                   <Controller
                     name="illustrator"
                     control={control}
-                    render={({ field }) => <Input invalid={!!errors.illustrator} type="text" {...field} />}
+                    render={({ field }) => <input className="form-control" type="text" {...field} />}
                   />
-                  <FormFeedback>{errors?.illustrator?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{errors?.illustrator?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row className='required'>
@@ -154,27 +154,27 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                     name="type"
                     control={control}
                     render={({ field }) => (
-                      <Input invalid={!!errors.type} type="select" {...field} style={{ width: 200 }} >
+                      <Input type="select" {...field} style={{ width: 200 }} >
                         <option value="1">Truyện dịch</option>
                         <option value="2">Truyện convert</option>
                         <option value="3">Truyện sáng tác</option>
                       </Input>
                     )}
                   />
-                  <FormFeedback>{errors?.type?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{errors?.type?.message}</FormFeedback>
                 </Col>
               </FormGroup>
-              <FormGroup row className='required'>
+              <FormGroup row>
                 <Label sm={2}>Nhóm dịch</Label>
                 <Col sm={10} className='pr-4'>
                   <Controller
                     name="group"
                     control={control}
                     render={({ field }) => (
-                      <Input invalid={!!errors.type} type="text" {...field} />
+                      <input className="form-control" type="text" {...field} />
                     )}
                   />
-                  <FormFeedback>{errors?.group?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{errors?.group?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row className='required'>
@@ -211,7 +211,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                       />
                     )}
                   />
-                  <FormFeedback>{errors?.summary?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{errors?.summary?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup>
@@ -253,7 +253,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                       </Input>
                     )}
                   />
-                  <FormFeedback>{errors?.status?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{errors?.status?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup className="form-group mb-0 pt-2 text-center">

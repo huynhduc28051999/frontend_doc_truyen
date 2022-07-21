@@ -50,7 +50,7 @@ function Discuss(props: Props) {
             <Eye
               style={{ marginRight: 10 }}
               role="button"
-              onClick={() => router.push({ pathname: '/truyen/[id]', query: { id: row.id } })} />
+              onClick={() => router.push({ pathname: '/thao-luan/[id]', query: { id: row.id } })} />
             <Trash2 role="button" />
           </div>
         );
