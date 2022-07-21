@@ -5,6 +5,7 @@ import { getRecentComments } from "redux/actions/commentAction";
 import { Action } from "types";
 import moment from "moment";
 import "moment/locale/vi";
+import { cleanHtml } from "shared/utils";
 moment.locale("vi");
 
 function RecentComment(props: PropsFromRedux) {
@@ -56,7 +57,7 @@ function RecentComment(props: PropsFromRedux) {
                 className="comment-content comment-ellipsis"
                 style={{ maxHeight: 150 }}
               >
-                {item.content}
+                {cleanHtml(item.content)}
               </div>
               <div className="comment-top">
                 <div className="comment-user_ava">
