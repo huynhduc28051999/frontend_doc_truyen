@@ -25,14 +25,12 @@ function ReadingSeries() {
             </div>
             <div className="col-8 col-lg-8">
               <a
-                x-text="reading.series_title"
                 href={reading.storyUrl}
-                className="text-truncate block font-weight-bold"
+                className="text-truncate block font-weight-bold mb-1"
               >
                 {reading.storyTitle}
               </a>
               <a
-                x-text="reading.chapter_title"
                 href={reading.chapperUrl}
                 className="text-truncate block"
               >

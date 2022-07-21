@@ -12,6 +12,7 @@ const reducer = (state = initialState, action: Action) => {
   const { payload, error } = action;
   switch (action.type) {
     case REQUEST(commentConstant.GET_COMMENTS):
+    case REQUEST(commentConstant.GET_RECENT_COMMENTS):
       return {
         ...state,
         isLoading: true,
@@ -19,6 +20,7 @@ const reducer = (state = initialState, action: Action) => {
         comments: []
       };
     case SUCCESS(commentConstant.GET_COMMENTS):
+    case SUCCESS(commentConstant.GET_RECENT_COMMENTS):
       return {
         ...state,
         isLoading: false,
@@ -26,6 +28,7 @@ const reducer = (state = initialState, action: Action) => {
         comments: payload?.response
       };
     case FAILURE(commentConstant.GET_COMMENTS):
+    case FAILURE(commentConstant.GET_RECENT_COMMENTS):
       return {
         ...state,
         isLoading: false,

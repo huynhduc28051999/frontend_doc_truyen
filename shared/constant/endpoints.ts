@@ -15,3 +15,4 @@ export const URL_DISCUSS_BY_STORY = '/discuss/byStory';
 export const URL_ALL_DISCUSS = '/discuss/all';
 export const URL_COMMENTS = '/comment/allBy'
 export const URL_CREATE_COMMENT = '/comment'
+export const URL_RECENT_COMMENT = '/comment/recently'

@@ -14,17 +14,35 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Input,
 } from "reactstrap";
 import { logoutAction } from "redux/actions";
 import { CookiesStorage } from "shared/config/cookie";
-import { User } from 'react-feather';
+import { Search, User } from 'react-feather';
 
 const Narbar = (props: PropsFromRedux) => {
   const { currentUser } = props;
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
+  const [search, setSearch] = useState('');
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const handleSearchChange = (event: any) => {
+    setSearch(event.target.value);
+  }
+
+  const handleSearch = () => {
+    router.push({
+      pathname: '/tim-kiem',
+      query: {
+        search
+      }
+    })
+    if (router.pathname === '/tim-kiem') {
+      router.reload()
+    }
+  }
 
   const onLogout = () => {
     CookiesStorage.clearAccessToken();
@@ -55,6 +73,10 @@ const Narbar = (props: PropsFromRedux) => {
                 </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
+          <div className='d-flex align-items-center' style={{ marginRight: 10 }}>
+            <Input className="search-input" value={search} onChange={handleSearchChange} />
+            <Search className='cursor-pointer' onClick={handleSearch} />
+          </div>
           <Nav navbar>
             {!currentUser?.id ? (
               <NavItem>

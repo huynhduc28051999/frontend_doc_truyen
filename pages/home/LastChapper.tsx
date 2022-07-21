@@ -10,6 +10,7 @@ import RecentComment from './RecentComment'
 import ThumItemFLow from './ThumItemFLow'
 import Loader from '@/components/loader'
 import { StoryConstant } from 'redux/constants'
+import TopView from './TopView'
 
 function LastChapper(props: PropsFromRedux) {
   const {
@@ -80,6 +81,7 @@ function LastChapper(props: PropsFromRedux) {
         <Col sm={12} lg={3}>
           <ReadingSeries />
           <RecentComment />
+          <TopView />
         </Col>
       </Row>
     </Container>
