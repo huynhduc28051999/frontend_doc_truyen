@@ -50,7 +50,7 @@ function RdSidebar(props: any) {
                 />
                 <div className="series-owner-title">
                   <span className="series-owner_name">
-                    <a href="#">{story.user?.username}</a>
+                    <a href="#">{story.user?.name || story.user?.username}</a>
                   </span>
                 </div>
               </div>

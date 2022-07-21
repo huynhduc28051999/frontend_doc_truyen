@@ -33,7 +33,7 @@ function Discuss(props: Props) {
       dataField: "author",
       isDummyField: true,
       text: "Người đăng",
-      formatter: () => currentUser.username,
+      formatter: () => currentUser.name || currentUser.username,
     },
     {
       dataField: "createdAt",
@@ -76,7 +76,7 @@ function Discuss(props: Props) {
     <AuthLayout>
       <Container fluid='md' className='mt-5'>
         <div className="basic-section">
-          <header className="sect-header"><span className="sect-title">Thảo luận của {currentUser.username}</span></header>
+          <header className="sect-header"><span className="sect-title">Thảo luận của {currentUser.name || currentUser.username}</span></header>
           <section
             className="board-list has-pagination"
             style={{ marginTop: 20 }}

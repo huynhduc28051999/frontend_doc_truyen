@@ -83,7 +83,7 @@ function Series(props: Props) {
     <AuthLayout>
       <Container fluid='lg' className='mt-5'>
         <div className="basic-section">
-          <header className="sect-header"><span className="sect-title">Sáng tác của {currentUser.username}</span></header>
+          <header className="sect-header"><span className="sect-title">Sáng tác của {currentUser.name || currentUser.username}</span></header>
           <section
             className="board-list has-pagination"
             style={{ marginTop: 20 }}

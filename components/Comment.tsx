@@ -21,7 +21,7 @@ function Comment(props: any) {
           <div className="ln-comment-wrapper">
             <div className="ln-comment-user_name">
               <a href="#" className="strong">
-                {comment.createBy?.username}
+                {comment.createBy?.name || comment.createBy?.username}
               </a>
               <div className="ln-comment-user_badge comment-mod">
                 <b>{ownId === comment.createBy.id ? "Mod" : ""}</b>
