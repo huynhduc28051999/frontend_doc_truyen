@@ -61,7 +61,7 @@ function LastChapper(props: PropsFromRedux) {
               {newChapStories.map((item: any) => (
                 <ThumItemFLow key={item.id} story={item} />
               ))}
-              {!loadingNewChapStories && <ReadMore />}
+              {!loadingNewChapStories && <ReadMore url='sort=updatedAt' />}
             </Row>
           </section>
           <section className="index-section thumb-section-flow last-chapter translation one-row">
@@ -73,7 +73,7 @@ function LastChapper(props: PropsFromRedux) {
               {newStories.map((item: any) => (
                 <ThumItemFLow key={item.id} story={item} />
               ))}
-              {!loadingNewStories  && <ReadMore />}
+              {!loadingNewStories  && <ReadMore url='sort=createdAt' />}
             </Row>
           </section>
         </Col>

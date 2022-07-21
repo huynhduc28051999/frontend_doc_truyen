@@ -1,31 +1,49 @@
-import React from 'react'
+import React from "react";
+import { LocalStorage } from "shared/config/localStorage";
+import { LocalStorageKey } from "shared/constant/common";
 
 function ReadingSeries() {
+  const storiesHistory = JSON.parse(
+    LocalStorage.get(LocalStorageKey.reading_series) || "[]"
+  );
   return (
-
-    <section id="reading-history" className="index-section" >
-      {/* x-data="{ storage: (JSON.parse(localStorage.getItem('reading_series')) || []).slice(0,4) }" */}
+    <section id="reading-history" className="index-section">
       <header className="section-title">
-        <a href="https://docln.net/lich-su-doc">
-          <span className="sts-bold">Truyện</span><span className="sts-empty">vừa đọc</span>
+        <a href="#">
+          <span className="sts-bold">Truyện</span>
+          <span className="sts-empty">vừa đọc</span>
         </a>
       </header>
       <main className="sect-body">
-        {/* <template x-for="reading in storage">
-      <div className="row ml-1 mb-3">
-      <div className="col-2 col-lg-2 a6-ratio">
-      <div className="img-contain-ratio content" :style="{ backgroundImage: reading.series_cover }"></div>
-      </div>
-      <div className="col-8 col-lg-8">
-      <a x-text="reading.series_title" :href="reading.series_url" className="text-truncate block font-weight-bold"></a>
-      <div x-text="reading.book_title" className="small mb-3 text-truncate"></div>
-      <a x-text="reading.chapter_title" :href="reading.chapter_url" className="text-truncate block"></a>
-      </div>
-      <div>
-      </div></div></template> */}
+        {storiesHistory.map((reading: any, index: number) => (
+          <div className="row ml-1 mb-3" key={index}>
+            <div className="col-2 col-lg-2 a6-ratio">
+              <div
+                className="img-contain-ratio content"
+                style={{ backgroundImage: 'url("images/Bookcover.png")' }}
+              ></div>
+            </div>
+            <div className="col-8 col-lg-8">
+              <a
+                x-text="reading.series_title"
+                href={reading.storyUrl}
+                className="text-truncate block font-weight-bold"
+              >
+                {reading.storyTitle}
+              </a>
+              <a
+                x-text="reading.chapter_title"
+                href={reading.chapperUrl}
+                className="text-truncate block"
+              >
+                {reading.chapperTitle}
+              </a>
+            </div>
+          </div>
+        ))}
       </main>
     </section>
-  )
+  );
 }
 
-export default ReadingSeries
+export default ReadingSeries;

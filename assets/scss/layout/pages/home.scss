@@ -19,7 +19,6 @@
     }
     .a6-ratio {
       overflow: hidden;
-      width: 100%;
       .content {
         bottom: 0;
         left: 0;
@@ -126,4 +125,15 @@ a {
   background-color: transparent;
   color: inherit;
   text-decoration: none;
+}
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.font-weight-bold {
+  font-weight: 700!important;
+}
+.block {
+  display: block;
 }

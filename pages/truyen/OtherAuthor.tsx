@@ -7,7 +7,7 @@ function OtherAuthor({ story }: any) {
     <li>
       <div className="others-img no-padding">
         <div className="a6-ratio">
-          <div className="content img-in-ratio" style={{ backgroundImage: `url(${story.avatar})` }}>
+          <div className="content img-in-ratio" style={{ backgroundImage: `url(${story.avatar || '/images/Bookcover.png'})` }}>
           </div>
         </div>
       </div>

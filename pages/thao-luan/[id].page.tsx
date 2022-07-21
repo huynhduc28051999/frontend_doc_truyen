@@ -40,7 +40,7 @@ function DiscussDetail(props: PropsFromRedux) {
                 <Col xs={8}>
                   <div className="page-author group-admin">
                     <div className="author_ava">
-                      <img src="https://i.docln.net/lightnovel/users/ua934-8740fdc0-aa8d-40d0-9201-1a952f1dda68.jpg" />
+                      <img src={discuss.user?.avatar || '/images/avatar.png'} />
                     </div>
                     <div className="author-info">
                       <div className="author_name">

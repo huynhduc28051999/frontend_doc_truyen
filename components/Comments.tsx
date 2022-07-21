@@ -59,7 +59,7 @@ function Comments(props: any) {
                 <a href="/dang-ky">tạo tài khoản</a> để bình luận.
               </div>
             ) : (
-              <CommentInput onSubmit={hanldeCreateComment} />
+              <>{ownId ? <CommentInput onSubmit={hanldeCreateComment} /> : ''}</>
             )}
             {isLoading && <Loader />}
             {comments.map((item: any) => (

@@ -1,3 +1,5 @@
+import { isBrowser } from "shared/utils";
+
 export interface IStorageItem {
   key: string;
   value: string;
@@ -16,15 +18,15 @@ export class StorageItem {
 
 export const LocalStorage = {
   add(key: string, item: string) {
-    localStorage.setItem(key, item);
+    isBrowser() && localStorage.setItem(key, item);
   },
   get(key: string) {
-    return localStorage.getItem(key);
+    return isBrowser() ? localStorage.getItem(key) : undefined;
   },
   remove(key: string) {
-    localStorage.removeItem(key);
+    isBrowser() && localStorage.removeItem(key);
   },
   clear() {
-    localStorage.clear();
+    isBrowser() && localStorage.clear();
   },
 };

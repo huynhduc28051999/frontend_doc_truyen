@@ -1,7 +1,6 @@
 import MainLayout from "@/components/layout/mainLayout";
 import Loader from "@/components/loader";
 import TopGroup from "@/components/TopGroup";
-import { isEmpty } from "lodash";
 import { useRouter } from "next/router";
 import { TAG } from "pages/admin/constants";
 import ThumItemFLow from "pages/home/ThumItemFLow";
@@ -21,15 +20,22 @@ const SORT_ENUM: any = {
 
 function TimKiem(props: PropsFromRedux) {
   const { isLoading, stories, searchStoriesAction, pagination } = props
-  const [searchInput, setSearchInput] = useState("");
+  const router = useRouter();
+  const { search, sort: sortQuey } = router.query;
+  const [searchInput, setSearchInput] = useState((search as string) || '');
   const [type, setType] = useState<any>({ 1: true, 2: true, 3: true });
   const [status, setStatus] = useState<any>({ 1: true, 2: true, 3: true });
-  const [sort, setSort] = useState('ASC');
+  const [sort, setSort] = useState(SORT_ENUM[sortQuey as string] ? sortQuey : 'ASC');
   const [genders, setGenders] = useState<number | undefined>();
   const [page, setPage] = useState(1)
-  const router = useRouter();
 
   const onInputChange = (event: any) => {
+    const sort = new URLSearchParams(window.location.search).get('sort') as string;
+    window.history.pushState(
+      router.pathname,
+      '',
+      `${router.pathname}?search=${encodeURIComponent(event.target.value || '')}&sort=${sort}`
+    );
     setSearchInput(event.target.value || "");
   };
   
@@ -51,15 +57,11 @@ function TimKiem(props: PropsFromRedux) {
     }
     searchStoriesAction({ params });
 
-    if (!isEmpty(search)) {
-      window.history.pushState(
-        router.pathname,
-        '',
-        `${router.pathname}?search=${encodeURIComponent(search)}&sort=${sortRequest}`
-      );
-      return;
-    }
-    window.history.pushState(router.pathname, '', router.pathname);
+    window.history.pushState(
+      router.pathname,
+      '',
+      `${router.pathname}?search=${encodeURIComponent(search || '')}&sort=${sortRequest}`
+    );
   }
 
   const onTypeChange = (event: any) => {
@@ -81,6 +83,12 @@ function TimKiem(props: PropsFromRedux) {
   }
 
   const onSortChange = (event: any) => {
+    const searchQuery = new URLSearchParams(window.location.search).get('search') as string;
+    window.history.pushState(
+      router.pathname,
+      '',
+      `${router.pathname}?search=${encodeURIComponent(searchQuery || '')}&sort=${event.target.value}`
+    );
     setSort(event.target.value)
   }
 
@@ -134,7 +142,7 @@ function TimKiem(props: PropsFromRedux) {
                     onClick={onSearch}
                   />
                 </div>
-                <Input type="select" style={{ width: 200 }} onChange={onSortChange}>
+                <Input type="select" style={{ width: 200 }} onChange={onSortChange} value={sort}>
                   <option value="ASC">A - Z</option>
                   <option value="DESC">Z - A</option>
                   <option value="updatedAt">Mới cập nhật</option>

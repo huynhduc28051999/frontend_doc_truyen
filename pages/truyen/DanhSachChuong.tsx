@@ -19,7 +19,7 @@ function DanhSachChuong(props: any) {
             <div className="volume-cover">
               <a href="/truyen/11586-shimotsuki-wa-mob-ga-suki/t16958-phan-mot">
                 <div className="a6-ratio">
-                <div className="content img-in-ratio" style={{ backgroundImage: `url(${avatar})` }}>
+                <div className="content img-in-ratio" style={{ backgroundImage: `url(${avatar || '/images/Bookcover.png'})` }}>
                 </div>
                 </div>
               </a>

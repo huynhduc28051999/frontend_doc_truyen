@@ -15,7 +15,7 @@ function ThumItemFLow(props: any) {
             title={story?.chapper ? story?.chapper?.title : story?.title || 'link'}>
           <div className="a6-ratio">
             <div className="content img-in-ratio lazyloaded"
-              style={{ backgroundImage: `url(${story?.avatar})`}}
+              style={{ backgroundImage: `url(${story?.avatar || '/images/Bookcover.png'})`}}
             ></div>
           </div>
         </Link>

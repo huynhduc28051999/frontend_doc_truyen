@@ -16,7 +16,7 @@ const PopularThumb = (props: any) => {
           <div className="a6-ratio">
             <div
               className="content img-in-ratio"
-              style={{ backgroundImage: `url(${story?.avatar})` }}
+              style={{ backgroundImage: `url(${story?.avatar || '/images/Bookcover.png'})` }}
             ></div>
           </div>
         </Link>

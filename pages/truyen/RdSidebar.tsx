@@ -45,8 +45,8 @@ function RdSidebar(props: any) {
                 <img
                   width="50px"
                   height="50px"
-                  src="https://i.docln.net/lightnovel/users/ua176-4ac524b9-7a25-4013-9453-f5f49f6355a3.jpg"
-                  alt="Poster's avatar"
+                  src={story.user?.avatar || '/images/avatar.png'}
+                  alt={story.user?.name || story.user?.username}
                 />
                 <div className="series-owner-title">
                   <span className="series-owner_name">

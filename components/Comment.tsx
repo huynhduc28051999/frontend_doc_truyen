@@ -12,10 +12,10 @@ function Comment(props: any) {
   };
 
   return (
-    <div className="ln-comment-group">
+    <div className="ln-comment-group" id={comment.id}>
       <div id="ln-comment" className="ln-comment-item clear">
         <div className="ln-comment-user_ava">
-          <img src="https://i.docln.net/lightnovel/users/ua118777-4ec37a6b-0552-492a-ad29-c003c9f99f7a.jpg" />
+          <img src={comment.createBy?.avatar || '/images/avatar.png'} />
         </div>
         <div className="ln-comment-info">
           <div className="ln-comment-wrapper">
@@ -43,7 +43,7 @@ function Comment(props: any) {
           </div>
           <div className="visible-toolkit">
             <span className="ln-comment-time">
-              <a href="/thao-luan/77-quy-dinh-doi-voi-oln?comment_id=1874304#ln-comment-1874304">
+              <a href={`#${comment.id}`}>
                 <time
                   className="timeago"
                   title={new Date(comment.createdAt).toString()}
