@@ -5,7 +5,7 @@ import { FAILURE, REQUEST, SUCCESS } from '../constants';
 const initialState = {
   isLoading: false,
   isError: false,
-  comments: []
+  comments: [],
 };
 
 const reducer = (state = initialState, action: Action) => {

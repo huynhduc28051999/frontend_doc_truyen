@@ -6,6 +6,7 @@ import discussSaga from './sagas/discussSaga';
 import homeSaga from './sagas/homeSaga';
 import detailStorySaga from './sagas/detailStorySaga';
 import commentSaga from './sagas/commentSaga';
+import notificationSaga from "./sagas/notificationSaga";
 
 export const sagaMiddleware = createSagaMiddleware();
 
@@ -16,6 +17,7 @@ export default function* rootSaga() {
     discussSaga(),
     homeSaga(),
     detailStorySaga(),
-    commentSaga()
+    commentSaga(),
+    notificationSaga()
   ]);
 }

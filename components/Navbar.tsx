@@ -19,6 +19,7 @@ import {
 import { logoutAction } from "redux/actions";
 import { CookiesStorage } from "shared/config/cookie";
 import { Search, User } from 'react-feather';
+import Notification from "@/components/header/notification";
 
 const Narbar = (props: PropsFromRedux) => {
   const { currentUser } = props;
@@ -83,19 +84,22 @@ const Narbar = (props: PropsFromRedux) => {
                 <NavLink href="/dang-nhap">Đăng nhập</NavLink>
               </NavItem>
             ) : (
-              <UncontrolledDropdown inNavbar nav>
-                <DropdownToggle caret nav>
-                    <User size={23} />
-                  </DropdownToggle>
-                  <DropdownMenu end>
-                    <DropdownItem href="/admin">
-                      Hệ thống
-                    </DropdownItem>
-                    <DropdownItem onClick={onLogout}>
-                      Đăng xuất
-                    </DropdownItem>
-                  </DropdownMenu>
-              </UncontrolledDropdown>
+                <>
+                  <Notification/>
+                  <UncontrolledDropdown inNavbar nav>
+                    <DropdownToggle caret nav>
+                        <User size={23} />
+                      </DropdownToggle>
+                      <DropdownMenu end>
+                        <DropdownItem href="/admin">
+                          Hệ thống
+                        </DropdownItem>
+                        <DropdownItem onClick={onLogout}>
+                          Đăng xuất
+                        </DropdownItem>
+                      </DropdownMenu>
+                  </UncontrolledDropdown>
+                </>
             )}
           </Nav>
         </Collapse>

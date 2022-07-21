@@ -5,6 +5,8 @@ import discussReducer from './reducers/discussReducer';
 import homeReducer from './reducers/homeReducer';
 import detailStoryReducer from './reducers/detailStoryReducer';
 import commentReducer from './reducers/commentReducer';
+import notificationReducer from './reducers/notificationReducer';
+
 
 const rootReducers = combineReducers({
   authReducer,
@@ -12,7 +14,8 @@ const rootReducers = combineReducers({
   discussReducer,
   homeReducer,
   detailStoryReducer,
-  commentReducer
+  commentReducer,
+  notificationReducer
 });
 
 export default rootReducers;
