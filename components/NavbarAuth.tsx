@@ -71,7 +71,7 @@ const NarbarAuth = ({ currentUser }: PropsFromRedux) => {
                 </UncontrolledDropdown>
               </Nav>
               <NavbarBrand>
-                <Button onClick={onLogout}>Đăng xuất</Button>
+                <Button onClick={onLogout} outline>Đăng xuất</Button>
               </NavbarBrand>
             </>
           ): (

@@ -68,9 +68,9 @@ const Narbar = (props: PropsFromRedux) => {
                   Hướng dẫn
                 </DropdownToggle>
                 <DropdownMenu end>
-                  <NavLink href="/thao-luan">Đăng truyện</NavLink>
-                  <NavLink href="/thao-luan">Giới thiệu</NavLink>
-                  <NavLink href="/thao-luan">Góp ý - báo lỗi</NavLink>
+                  <NavLink href="/thao-luan/3">Đăng truyện</NavLink>
+                  <NavLink href="/thao-luan/1">Giới thiệu</NavLink>
+                  <NavLink href="/thao-luan/2">Góp ý - báo lỗi</NavLink>
                 </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
