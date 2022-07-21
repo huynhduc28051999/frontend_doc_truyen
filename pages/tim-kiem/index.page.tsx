@@ -1,6 +1,8 @@
 import MainLayout from "@/components/layout/mainLayout";
 import Loader from "@/components/loader";
 import TopGroup from "@/components/TopGroup";
+import { isEmpty } from "lodash";
+import { useRouter } from "next/router";
 import { TAG } from "pages/admin/constants";
 import ThumItemFLow from "pages/home/ThumItemFLow";
 import React, { Dispatch, useEffect, useState } from "react";
@@ -10,6 +12,13 @@ import { searchStories } from "redux/actions/storyAction";
 import { Action } from "types";
 import { Payload } from "types/action";
 
+const SORT_ENUM: any = {
+  ASC: 'ASC',
+  DESC: 'DESC',
+  updatedAt: 'updatedAt',
+  createdAt: 'createdAt'
+}
+
 function TimKiem(props: PropsFromRedux) {
   const { isLoading, stories, searchStoriesAction, pagination } = props
   const [searchInput, setSearchInput] = useState("");
@@ -18,15 +27,20 @@ function TimKiem(props: PropsFromRedux) {
   const [sort, setSort] = useState('ASC');
   const [genders, setGenders] = useState<number | undefined>();
   const [page, setPage] = useState(1)
+  const router = useRouter();
 
   const onInputChange = (event: any) => {
     setSearchInput(event.target.value || "");
   };
-
+  
   const onSearch = () => {
+    const searchQuery = new URLSearchParams(window.location.search).get('search') as string;
+    const sortQuey = new URLSearchParams(window.location.search).get('sort') as string;
+    const search = searchQuery || searchInput;
+    const sortRequest = SORT_ENUM[sortQuey] ?? sort;
     const params: any = {
-      search: searchInput,
-      sort,
+      search,
+      sort: sortRequest,
       page,
       type: Object.keys(type).filter(item => type[item]).map(item => Number(item)),
       status: Object.keys(status).filter(item => status[item]).map(item => Number(item)),
@@ -36,6 +50,16 @@ function TimKiem(props: PropsFromRedux) {
       params.genders = Number(genders);
     }
     searchStoriesAction({ params });
+
+    if (!isEmpty(search)) {
+      window.history.pushState(
+        router.pathname,
+        '',
+        `${router.pathname}?search=${encodeURIComponent(search)}&sort=${sortRequest}`
+      );
+      return;
+    }
+    window.history.pushState(router.pathname, '', router.pathname);
   }
 
   const onTypeChange = (event: any) => {
