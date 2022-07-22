@@ -105,7 +105,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                     control={control}
                     render={({ field }) => <input className="form-control"  type="text" {...field} />}
                   />
-                  <FormFeedback className="d-block">{errors?.title?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{(errors as any)?.title?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -116,7 +116,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                     control={control}
                     render={({ field }) => <input className="form-control" type="text" {...field} placeholder='Ngăn cách nhiều tên bằng dấu chấm phẩy ;' />}
                   />
-                  <FormFeedback className="d-block">{errors?.altname?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{(errors as any)?.altname?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -133,7 +133,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                     control={control}
                     render={({ field }) => <input className="form-control" type="text" {...field} />}
                   />
-                  <FormFeedback className="d-block">{errors?.author?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{(errors as any)?.author?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -144,7 +144,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                     control={control}
                     render={({ field }) => <input className="form-control" type="text" {...field} />}
                   />
-                  <FormFeedback className="d-block">{errors?.illustrator?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{(errors as any)?.illustrator?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row className='required'>
@@ -161,7 +161,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                       </Input>
                     )}
                   />
-                  <FormFeedback className="d-block">{errors?.type?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{(errors as any)?.type?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -174,7 +174,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                       <input className="form-control" type="text" {...field} />
                     )}
                   />
-                  <FormFeedback className="d-block">{errors?.group?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{(errors as any)?.group?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row className='required'>
@@ -211,7 +211,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                       />
                     )}
                   />
-                  <FormFeedback className="d-block">{errors?.summary?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{(errors as any)?.summary?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup>
@@ -253,7 +253,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                       </Input>
                     )}
                   />
-                  <FormFeedback className="d-block">{errors?.status?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{(errors as any)?.status?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup className="form-group mb-0 pt-2 text-center">

@@ -36,7 +36,7 @@ function Notification(props: any) {
                 Không có thông báo
               </main>
             ) : notifications.map((item: any) => (
-              <Link href={item.url}>
+              <Link href={item.url} key={item.id}>
                 <Alert color="secondary" className='m-2' style={{ cursor: 'pointer' }}>
                   {cleanHtml(item.content)}
                 </Alert>

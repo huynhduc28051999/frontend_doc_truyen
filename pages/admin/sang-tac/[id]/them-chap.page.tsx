@@ -70,7 +70,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                     control={control}
                     render={({ field }) => <input className="form-control" type="text" {...field} />}
                   />
-                  <FormFeedback className="d-block">{errors?.title?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{(errors as any)?.title?.message || ''}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup className='required'>
@@ -96,7 +96,7 @@ const CreateStory: React.FC<ICreateStoryProps> = (props) => {
                       />
                     )}
                   />
-                  <FormFeedback className="d-block">{errors?.content?.message}</FormFeedback>
+                  <FormFeedback className="d-block">{(errors as any)?.content?.message}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup className="form-group mb-0 pt-2 text-center">
