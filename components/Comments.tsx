@@ -15,6 +15,7 @@ function Comments(props: any) {
     chapperId,
     getCommentsAction,
     comments,
+    type,
     isLoading,
     ownId,
     createCommentAction
@@ -63,7 +64,7 @@ function Comments(props: any) {
             )}
             {isLoading && <Loader />}
             {comments.map((item: any) => (
-              <Comment key={item.id} comment={item} ownId={ownId} />
+              <Comment key={item.id} comment={item} ownId={ownId} type={type} />
             ))}
           </main>
         </section>

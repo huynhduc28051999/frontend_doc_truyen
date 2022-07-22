@@ -139,6 +139,26 @@ function* searchStories(action: Action) {
   }
 }
 
+function* deleteStory(action: Action) {
+  const { params } = action.payload || {};
+  try {
+    const deleteApi = Api.delete(URL_STORY, { params });
+    const response: ResponseGenerator = yield call(() => deleteApi);
+    if (response?.data?.data) {
+      yield put({
+        type: SUCCESS(StoryConstant.DELETE_STORY),
+        payload: {},
+      });
+    }
+  } catch (error) {
+  toast.error('Xoá sáng tác thất bại')
+    yield put({
+      type: FAILURE(StoryConstant.DELETE_STORY),
+      error,
+    });
+  }
+}
+
 function* storySaga() {
   yield takeEvery(REQUEST(StoryConstant.CREATE_STORY), createStory);
   yield takeEvery(REQUEST(StoryConstant.GET_OWN_STORIES), getOwnStories);
@@ -146,6 +166,7 @@ function* storySaga() {
   yield takeEvery(REQUEST(StoryConstant.CREATE_CHAPPER), createChapper);
   yield takeEvery(REQUEST(StoryConstant.GET_ALL_STORIES), getAllStories);
   yield takeEvery(REQUEST(StoryConstant.SEARCH_STORIES), searchStories);
+  yield takeEvery(REQUEST(StoryConstant.DELETE_STORY), deleteStory);
 }
 
 export default storySaga;

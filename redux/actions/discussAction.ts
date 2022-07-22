@@ -24,3 +24,8 @@ export const getDiscussByStory = (payload: Payload) => ({
   type: REQUEST(discussConstant.GET_DISCUSS_By_STORY),
   payload,
 });
+
+export const deleteDiscuss = (payload: Payload) => ({
+  type: REQUEST(discussConstant.DELETE_DISCUSS),
+  payload,
+});

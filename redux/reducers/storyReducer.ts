@@ -76,6 +76,17 @@ const reducer = (state = initialState, action: Action) => {
         isLoading: false,
         isError: true,
       };
+    case REQUEST(StoryConstant.DELETE_STORY): {
+      const idIndex = state.stories.findIndex((item: any) => item.id === payload?.params?.id);
+      if (idIndex !== -1) {
+        state.stories.splice(idIndex, 1);
+      }
+
+      return {
+        ...state,
+        stories: [...state.stories],
+      };
+    }
     default:
       return state;
   }

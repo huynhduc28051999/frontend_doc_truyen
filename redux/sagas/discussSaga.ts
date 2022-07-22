@@ -116,12 +116,33 @@ function* getDiscussById(action: Action) {
   }
 }
 
+function* deleteDiscuss(action: Action) {
+  const { params } = action.payload || {};
+  try {
+    const deleteApi = Api.delete(URL_DISCUSS, { params });
+    const response: ResponseGenerator = yield call(() => deleteApi);
+    if (response?.data?.data) {
+      yield put({
+        type: SUCCESS(discussConstant.DELETE_DISCUSS),
+        payload: {},
+      });
+    }
+  } catch (error) {
+  toast.error('Xoá sáng tác thất bại')
+    yield put({
+      type: FAILURE(discussConstant.DELETE_DISCUSS),
+      error,
+    });
+  }
+}
+
 function* discussSaga() {
   yield takeEvery(REQUEST(discussConstant.CREATE_DISUCSS), createDiscuss);
   yield takeEvery(REQUEST(discussConstant.GET_OWN_DISCUSS), getOwnDiscuss);
   yield takeEvery(REQUEST(discussConstant.GET_ALL_DISCUSS), getAllDiscuss);
   yield takeEvery(REQUEST(discussConstant.GET_DISCUSS_By_STORY), getDiscussByStory);
   yield takeEvery(REQUEST(discussConstant.GET_DISCUSS_ID), getDiscussById);
+  yield takeEvery(REQUEST(discussConstant.DELETE_DISCUSS), deleteDiscuss);
 }
 
 export default discussSaga;

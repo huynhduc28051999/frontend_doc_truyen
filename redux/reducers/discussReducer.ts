@@ -76,6 +76,17 @@ const reducer = (state = initialState, action: Action) => {
         isLoading: false,
         isError: true,
       };
+    case REQUEST(discussConstant.DELETE_DISCUSS): {
+      const idIndex = state.discuss.findIndex((item: any) => item.id === payload?.params?.id);
+      if (idIndex !== -1) {
+        state.discuss.splice(idIndex, 1);
+      }
+
+      return {
+        ...state,
+        discuss: [...state.discuss],
+      };
+    }
     default:
       return state;
   }

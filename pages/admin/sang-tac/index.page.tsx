@@ -1,24 +1,46 @@
 import AuthGuard from '@/components/HOC/authGuard'
 import AuthLayout from '@/components/layout/authLayout';
 import Loader from '@/components/loader';
-import React, { Dispatch, useEffect } from 'react'
+import React, { Dispatch, useEffect, useState } from 'react'
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationListStandalone, PaginationProvider } from 'react-bootstrap-table2-paginator';
 import { connect, ConnectedProps } from 'react-redux';
 import { CardBody, Container } from 'reactstrap';
-import { getOwnStories } from 'redux/actions/storyAction';
+import { deleteStory, getOwnStories } from 'redux/actions/storyAction';
 import { Action } from 'types';
 import { STORY_STATUS, STORY_TYPE } from '../constants';
 import { Eye, Trash2, PlusCircle } from 'react-feather';
 import { useRouter } from 'next/router';
+import RcModalConfirm from '@/components/ConfirmModal';
+import { Payload } from 'types/action';
 
 type Props = PropsFromRedux & {
   currentUser: any
 }
 
 function Series(props: Props) {
-  const { currentUser, getOwnStoriesAction, loading, stories } = props;
+  const { currentUser, getOwnStoriesAction, loading, stories, deleteStoryAction } = props;
   const router = useRouter();
+  const [openDelete, setOpenDelete] = useState(false);
+  const [selectedStory, setSelectedStory] = useState('');
+
+  const onToggleConfirm = () => {
+    setOpenDelete(!openDelete);
+  };
+
+  const openModal = (id: string) => {
+    setSelectedStory(id)
+    onToggleConfirm();
+  }
+
+  const onDelete = () => {
+    deleteStoryAction({
+      params: {
+        id: selectedStory
+      }
+    })
+    onToggleConfirm();
+  };
 
   useEffect(() => {
     getOwnStoriesAction();
@@ -58,7 +80,7 @@ function Series(props: Props) {
               style={{ marginRight: 10 }}
               role="button"
               onClick={() => router.push({ pathname: '/truyen/[id]', query: { id: row.id } })} />
-            <Trash2 role="button" />
+            <Trash2 role="button" onClick={() => openModal(row.id) } />
           </div>
         );
         return FormatterComponent;
@@ -112,6 +134,7 @@ function Series(props: Props) {
               </PaginationProvider>
             </CardBody>
           </section>
+          <RcModalConfirm modal={openDelete} closeForm={onToggleConfirm} onSubmit={onDelete} content="Bạn có muốn xoá sáng tác này không ?" />
         </div>
       </Container>
     </AuthLayout>
@@ -125,6 +148,7 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   getOwnStoriesAction: () => dispatch(getOwnStories()),
+  deleteStoryAction: (payload: Payload) => dispatch(deleteStory(payload))
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

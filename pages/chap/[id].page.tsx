@@ -77,7 +77,7 @@ function Chuong(props: PropsFromRedux) {
               <ChevronsRight size={25} />
             </a>
           </section>
-          <Comments chapperId={chapper.id} ownId={chapper.createBy} />
+          <Comments chapperId={chapper.id} ownId={chapper.createBy} type={chapper.story?.type} />
         </div>
       </div>
     </main>

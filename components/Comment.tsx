@@ -4,12 +4,22 @@ import "moment/locale/vi";
 moment.locale("vi");
 
 function Comment(props: any) {
-  const { comment, ownId } = props;
+  const { comment, ownId, type } = props;
   const [showMore, setShowMore] = useState(true);
 
   const toggleShowMore = () => {
     setShowMore(!showMore);
   };
+
+  const renderTag = (comment: any) => {
+    if (ownId === comment.createBy.id) {
+      if (type === 1) { // truyen dich
+        return 'Translator'
+      }
+      return 'Mod'
+    }
+    return ''
+  }
 
   return (
     <div className="ln-comment-group" id={comment.id}>
@@ -24,7 +34,7 @@ function Comment(props: any) {
                 {comment.createBy?.name || comment.createBy?.username}
               </a>
               <div className="ln-comment-user_badge comment-mod">
-                <b>{ownId === comment.createBy.id ? "Mod" : ""}</b>
+                <b>{renderTag(comment)}</b>
               </div>
             </div>
             <div></div>

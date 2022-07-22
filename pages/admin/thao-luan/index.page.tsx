@@ -1,24 +1,46 @@
+import RcModalConfirm from '@/components/ConfirmModal';
 import AuthGuard from '@/components/HOC/authGuard'
 import AuthLayout from '@/components/layout/authLayout';
 import Loader from '@/components/loader';
 import { useRouter } from 'next/router';
-import React, { Dispatch, useEffect } from 'react'
+import React, { Dispatch, useEffect, useState } from 'react'
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationListStandalone, PaginationProvider } from 'react-bootstrap-table2-paginator';
 import { Eye, Trash2 } from 'react-feather';
 import { connect, ConnectedProps } from 'react-redux';
 import { CardBody, Container } from 'reactstrap';
-import { getOwnDiscuss } from 'redux/actions/discussAction';
+import { deleteDiscuss, getOwnDiscuss } from 'redux/actions/discussAction';
 import { formatDate } from 'shared/utils';
 import { Action } from 'types';
+import { Payload } from 'types/action';
 
 type Props = PropsFromRedux & {
   currentUser: any
 }
 
 function Discuss(props: Props) {
-  const { currentUser, getOwnDiscuss, loading, discuss } = props;
+  const { currentUser, getOwnDiscuss, loading, discuss, deleteDiscussAction} = props;
   const router = useRouter();
+  const [openDelete, setOpenDelete] = useState(false);
+  const [selectedStory, setSelectedStory] = useState('');
+
+  const onToggleConfirm = () => {
+    setOpenDelete(!openDelete);
+  };
+
+  const openModal = (id: string) => {
+    setSelectedStory(id)
+    onToggleConfirm();
+  }
+
+  const onDelete = () => {
+    deleteDiscussAction({
+      params: {
+        id: selectedStory
+      }
+    })
+    onToggleConfirm();
+  };
 
   useEffect(() => {
     getOwnDiscuss();
@@ -51,7 +73,7 @@ function Discuss(props: Props) {
               style={{ marginRight: 10 }}
               role="button"
               onClick={() => router.push({ pathname: '/thao-luan/[id]', query: { id: row.id } })} />
-            <Trash2 role="button" />
+            <Trash2 role="button" onClick={() => openModal(row.id)} />
           </div>
         );
         return FormatterComponent;
@@ -105,6 +127,7 @@ function Discuss(props: Props) {
               </PaginationProvider>
             </CardBody>
           </section>
+          <RcModalConfirm modal={openDelete} closeForm={onToggleConfirm} onSubmit={onDelete} content="Bạn có muốn xoá thảo luận này không ?" />
         </div>
       </Container>
     </AuthLayout>
@@ -117,7 +140,8 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
-  getOwnDiscuss: () => dispatch(getOwnDiscuss())
+  getOwnDiscuss: () => dispatch(getOwnDiscuss()),
+  deleteDiscussAction: (payload: Payload) => dispatch(deleteDiscuss(payload)),
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

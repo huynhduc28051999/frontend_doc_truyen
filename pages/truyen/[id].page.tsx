@@ -36,7 +36,7 @@ function Truyen(props: PropsFromRedux) {
           </Col>
           <Col xs={12} lg={9} className="float-left">
             <DanhSachChuong chappers={story?.chappers || []} avatar={story?.avatar || ''}/>
-            <Comments storyId={story.id} ownId={story.user?.id} />
+            <Comments storyId={story.id} ownId={story.user?.id} type={story.type} />
           </Col>
         </Row>
       </Container>

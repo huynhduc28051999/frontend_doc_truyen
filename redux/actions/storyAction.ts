@@ -29,3 +29,8 @@ export const searchStories = (payload: Payload) => ({
   type: REQUEST(StoryConstant.SEARCH_STORIES),
   payload,
 });
+
+export const deleteStory = (payload: Payload) => ({
+  type: REQUEST(StoryConstant.DELETE_STORY),
+  payload,
+});
