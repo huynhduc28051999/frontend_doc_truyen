@@ -94,6 +94,9 @@ const Narbar = (props: PropsFromRedux) => {
                         <DropdownItem href="/admin">
                           Hệ thống
                         </DropdownItem>
+                        <DropdownItem href="/thong-bao">
+                            Thông báo
+                        </DropdownItem>
                         <DropdownItem onClick={onLogout}>
                           Đăng xuất
                         </DropdownItem>

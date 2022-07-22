@@ -14,7 +14,7 @@ import {
   DropdownItem,
   Button
 } from "reactstrap";
-import { Home } from 'react-feather';
+import { Home, User } from 'react-feather';
 import { useRouter } from "next/router";
 import { CookiesStorage } from "shared/config/cookie";
 import { logoutAction } from "redux/actions";
@@ -70,9 +70,25 @@ const NarbarAuth = ({ currentUser }: PropsFromRedux) => {
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </Nav>
-              <NavbarBrand>
-                <Button onClick={onLogout} outline>Đăng xuất</Button>
-              </NavbarBrand>
+              <Nav navbar style={{ marginRight: 20 }}>
+                <UncontrolledDropdown>
+                  <DropdownToggle caret nav>
+                      <User size={23} />
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem>
+                        {currentUser?.name || currentUser?.username}
+                      </DropdownItem>
+                      <DropdownItem divider />
+                      <DropdownItem href="/thong-bao">
+                          Thông báo
+                      </DropdownItem>
+                      <DropdownItem onClick={onLogout}>
+                        Đăng xuất
+                      </DropdownItem>
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+              </Nav>
             </>
           ): (
             <>

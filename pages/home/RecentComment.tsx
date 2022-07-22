@@ -57,7 +57,7 @@ function RecentComment(props: PropsFromRedux) {
                 className="comment-content comment-ellipsis"
                 style={{ maxHeight: 150 }}
               >
-                {cleanHtml(item.content)}
+                {cleanHtml(item.content, 100)}
               </div>
               <div className="comment-top">
                 <div className="comment-user_ava">
