@@ -24,8 +24,6 @@ function Notification(props: any) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser?.id]);
 
-  console.log({ notifications });
-  
   return (
     <MainLayout customClass="tim-kiem">
       <TopGroup />

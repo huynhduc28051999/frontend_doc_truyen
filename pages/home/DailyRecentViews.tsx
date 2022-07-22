@@ -126,7 +126,7 @@ const DailyRecentViews = (props: PropsFromRedux) => {
             <main>
               {loadingDiscuss && <Loader />}
               {discuss.map((item: any) => (
-                <div key={item.id} className="topic-item">
+                <div key={item.id} className="topic-item" style={{ cursor: 'pointer' }}>
                   <Row>
                     <Col xs={9} className="line-ellipsis">
                       <Circle size={18} color="#1ee865" />
